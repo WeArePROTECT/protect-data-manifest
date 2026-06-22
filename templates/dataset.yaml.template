@@ -1,0 +1,56 @@
+# =============================================================================
+# PROTECT Data Manifest — machine-readable descriptor (dataset.yaml)
+# =============================================================================
+# AUTO-GENERATED and owned by the manifest crawler. Do NOT hand-edit:
+# the crawler regenerates this file on each run and will overwrite changes.
+# All human narrative (meaning, caveats, join semantics) lives in the sibling
+# CARD.md, which the crawler never touches.
+#
+# Influenced by the Frictionless Tabular Data Package (resources + Table Schema)
+# and FAIR (rich, machine-readable, access-independent metadata).
+# =============================================================================
+
+id: <stable_slug>                 # e.g. patient_sample_isolate_linkage_v4
+title: <short human title>
+collection_root: <absolute path>  # data stays in place; the crawler never writes here
+
+owner:
+  name: <owner / lab contact>
+  lab: <Arkin | Conrad | Zengler | external>
+  contact: <email or slack, if known>
+
+access:                           # derived from filesystem permissions
+  status: <open | gated>          # gated = not world-readable
+  readable_by: [<unix groups / users>]
+  request_to: <who grants access, if gated>
+
+tags: [<FACET>, ...]              # controlled facet taxonomy — see templates/README.md
+
+freshness:                        # MACHINE-VERIFIED — not a hand-typed date
+  last_crawled: <ISO8601>         # when the crawler last described this collection
+  source_mtime_latest: <ISO8601>  # newest mtime found under collection_root
+  cadence_observed: <optional>    # derived from successive crawls
+
+size:
+  total_bytes: <int>
+  file_count: <int>
+
+resources:                        # one entry per significant data file (or xlsx sheet)
+  - path: <relative to collection_root>
+    format: <csv | tsv | xlsx | parquet | ...>
+    size_bytes: <int>
+    rows: <int | null>            # cheap line-count for delimited; lib-based otherwise
+    sheet: <name | null>          # multi-sheet xlsx -> one resource per sheet
+    schema:
+      fields:                     # column NAMES + inferred TYPE only — never data values
+        - {name: <col>, type: <string|integer|number|boolean|date|datetime>}
+      candidate_keys: [<col>, ...]  # heuristic (*_id etc.) — UNVERIFIED, for human review
+
+owner_manifest:                   # set when the owner maintains their own manifest (federation)
+  path: <absolute path to owner MANIFEST.md/README, or null>
+  last_updated_claimed: <date the owner file claims — for staleness comparison>
+
+# NOTE: primary/foreign keys, lineage rationale, and column meanings are semantic and
+# CANNOT be reliably auto-derived. They live in CARD.md and in the central linkage-layer
+# doc, on purpose — so regeneration of this file never clobbers human knowledge.
+notes: [<machine notes, e.g. permission-denied subpaths skipped>]

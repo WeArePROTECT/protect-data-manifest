@@ -1,0 +1,92 @@
+# =============================================================================
+# PROTECT Data Manifest — curated data products ("hot" collections)
+# =============================================================================
+# Naming: collection ids lead with the stable DATA DOMAIN, not the person or a
+# transient qualifier. Team / owner / version / processing-state are METADATA, so
+# a team producing new data types adds a NEW product here — never a rename.
+#
+# Per-collection options: team, domain, owner, tags, resource_globs, scan_depth,
+# max_resources, deep_size. The crawler fills all machine facts.
+# =============================================================================
+
+collections:
+  # ---- Arkin data team -------------------------------------------------------
+  - id: patient_sample_isolate_linkage
+    title: Patient–Sample–Isolate Gold Linkage
+    collection_root: /usr2/people/protect/Arkin_Lab/protect_data/patient_sample_isolate_linkage_data/patient_sample_isolate_table_v4
+    team: Arkin data team
+    domain: Integration & linkage
+    owner: {name: Spencer Long, lab: Arkin}
+    tags: [LINKAGE, CLINICAL, ISOLATE, CLEANED]
+
+  - id: lakehouse_exports
+    title: KBase Lakehouse Exports
+    collection_root: /usr2/people/protect/Arkin_Lab/protect_data/protect_lakehouse_pipeline/data/exports
+    team: Arkin data team
+    domain: Lakehouse
+    owner: {name: Spencer Long, lab: Arkin}
+    tags: [LAKEHOUSE_EXPORT]
+    scan_depth: 3              # exports live in dated subdirectories
+
+  - id: integration_pipeline_outputs
+    title: Integration Pipeline Outputs (the warehouse)
+    collection_root: /usr2/people/protect/Arkin_Lab/protect_data/protect_data_integration_pipeline/pipeline_outputs/runs
+    team: Arkin data team
+    domain: Integration & linkage
+    owner: {name: Spencer Long, lab: Arkin}
+    tags: [PIPELINE_OUTPUT, CLEANED, CLINICAL, LINKAGE, MULTI_OMICS, MICROBIOLOGY, SAMPLE_METADATA]
+    pick_latest_subdir: true   # outputs are dated runs; describe the newest, digest all runs
+    scan_depth: 1
+
+  # ---- Conrad — Clinical -----------------------------------------------------
+  - id: clinical_redcap_raw
+    title: Clinical — Raw REDCap Exports
+    collection_root: /usr2/people/protect/Conrad_Lab/metadata/RedCapDataExports/raw
+    team: Conrad
+    domain: Clinical
+    owner: {name: Conrad Lab, lab: Conrad}
+    tags: [CLINICAL, RAW]
+    request_to: "the Conrad clinical team (REDCap data owner; dir owner 'dibarramunoz'); Spencer Long (Arkin data) can help broker access"
+
+  # ---- Styer — Isolate genomics ---------------------------------------------
+  - id: asma_genomics
+    title: ASMA Bacterial Genomics
+    collection_root: /usr2/people/alex.styer/protect/ASMA
+    team: Styer
+    domain: Isolate genomics
+    owner: {name: Alex Styer, lab: Arkin}
+    tags: [GENOME, AMR, VIRULENCE, TAXONOMY, ISOLATE]
+    scan_depth: 2              # taxonomy / cluster outputs sit in subdirs
+    max_resources: 60
+    exclude_dirs: [isolates, gapseq, .snakemake, logs, new-seqs, sequencing]  # huge per-isolate / read trees
+
+  # ---- Kim (SYK) — Isolate phenotyping --------------------------------------
+  - id: asma_phenotyping
+    title: ASMA Isolate Phenotyping
+    collection_root: /usr2/people/protect/Arkin_Lab/SYK
+    team: Kim (SYK)
+    domain: Isolate phenotyping
+    owner: {name: Sun-Young Kim, lab: Arkin}
+    tags: [PHENOTYPE, CARBON_UTILIZATION, REPORTER]
+
+  # ---- Zengler — Metagenomics / MIND ----------------------------------------
+  - id: zengler_metagenomics_mind
+    title: Zengler Metagenomics / MIND
+    collection_root: /usr2/people/protect/Zengler_Lab/Emma
+    team: Zengler
+    domain: Metagenomics / MIND
+    owner: {name: Emma Rooholfada, lab: Zengler}
+    tags: [MULTI_OMICS, MIND, METAGENOMICS, METATRANSCRIPTOMICS]
+    scan_depth: 2
+    max_resources: 60
+
+  - id: protect_sample_roster
+    title: PROTECT Sample Roster
+    collection_root: /usr2/people/protect/Zengler_Lab
+    resource_globs: ["*PROTECTSamples.csv"]
+    team: Zengler
+    domain: Sample tracking
+    owner: {name: Zengler Lab, lab: Zengler}
+    tags: [SAMPLE_ROSTER]
+    # NOTE: roster file is Zengler's; the physical samples themselves originate from
+    # the Conrad clinical team (field collection) and are shipped on for processing.

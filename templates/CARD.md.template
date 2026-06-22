@@ -1,0 +1,43 @@
+---
+# Human-owned card. The crawler NEVER edits this file.
+collection_id: <matches dataset.yaml id>
+maintainer: <who keeps this card accurate>
+last_reviewed: <YYYY-MM-DD>          # when a human last verified this card
+summary: <one-line abstract — an agent reads this to judge relevance without opening the file>
+keywords: [<synonyms / aliases this is informally searched by — the names people actually use>]
+related: [<collection ids this commonly joins with or sits beside>]
+---
+
+# <Collection title>
+
+> Machine schema, file list, sizes, and freshness live in the sibling `dataset.yaml`.
+> This card holds the things a crawler can't know.
+
+## What this is
+<1–3 sentences: what the collection contains and at what grain (per patient / sample / isolate / assay).>
+
+## Why it exists / provenance
+<How it was produced; raw → pipeline → lakehouse lineage; which process or person generates it.>
+
+## How it connects (join keys)
+<The identifiers that link this to other collections (patient / sample / isolate IDs),
+and a pointer to the central linkage-layer doc. This is what enables cross-dataset filtering.>
+
+## Example questions this answers
+<3–6 natural-language questions a user (or their agent) might ask, each with how to answer it:
+which file + columns, and which join. This is what lets an agent route a query straight to the data.>
+
+## Data dictionary (key columns)
+<Plain-language meaning of the important columns. The full column list is in dataset.yaml.>
+
+## Caveats & known issues
+<e.g. "outputs vary per pipeline run"; "raw, not cleaned — use <X> instead"; version history.>
+
+## Recommended uses / not for
+<What this is good for; what it should not be used for.>
+
+## Access
+<Status (open / gated), who to ask, any sensitivity notes. Mirrors dataset.yaml.access.>
+
+## Maintainer & cadence
+<Owner, how often it changes, where the authoritative source lives.>
