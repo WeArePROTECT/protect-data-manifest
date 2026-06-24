@@ -2,9 +2,9 @@
 
 | | |
 |---|---|
-| **From** | Claude (with Spencer Long), session of 2026-06-15 |
-| **Status** | **v0 built, hardened, validated, and LIVE on a nightly cron.** 8 collections, all carded. Pipeline verified end-to-end and scheduled (2 AM UTC). Exhaustive card↔data accuracy audit complete (2026-06-15): all 8 cards checked file-by-file/column-by-column against the real data; 6 cards had mismatches, all fixed; manifest-only agent battery re-passed 8/8 with zero hallucinations. Cards still DRAFT pending owner review. |
-| **Repo** | `/usr2/people/protect/protect-data-manifest` (= `/auto/sahara/namib/home/protect/protect-data-manifest`) |
+| **From** | Claude (with Spencer Long), sessions of 2026-06-15 → 2026-06-23 |
+| **Status** | **v0 COMPLETE — live, version-controlled, and rolled out to the team.** 8 collections all carded; nightly cron (2 AM UTC); exhaustive card↔data audit done (6 cards fixed; manifest-only battery 8/8, zero hallucinations); cards de-perished to durable-facts-only; `dataset.yaml` is now a machine recency catalog. On GitHub at **`WeArePROTECT/protect-data-manifest`** (private). Team announced via Slack + onboarding guide on 2026-06-23. **Cards still DRAFT pending owner review — that's the main v1 gate.** What's left to build: see §7. |
+| **Repo** | `/usr2/people/protect/protect-data-manifest` (= `/auto/sahara/namib/home/protect/protect-data-manifest`); GitHub: `git@github.com:WeArePROTECT/protect-data-manifest.git` (private, branch `main`) |
 | **This is the single source of truth for current state.** Read it fully before doing anything. | |
 
 ---
@@ -54,6 +54,13 @@ supports the team's pneumonia research.
 - **Validation:** 12 fresh, manifest-only agent tests across two audit rounds — **zero hallucinations**;
   agents reliably locate data, give exact files/columns/joins, honor gated access, and honestly say
   "not found" when data is absent.
+- **Version control + team rollout:** the project is a **git repo** pushed to
+  `WeArePROTECT/protect-data-manifest` (private, branch `main`). A scientist-facing onboarding guide
+  lives at `docs/PROTECT_Data_Manifest_User_Guide.docx`; the team was announced via Slack + that guide
+  on 2026-06-23.
+- **Post-v0 hardening (this session):** all 8 cards **de-perished** (durable facts only — perishables
+  defer to `dataset.yaml`; rule in `templates/README.md` + §8); `dataset.yaml` gained a machine
+  **recency catalog** (`mtime` / `latest_resource` / `latest_subdir`); glob-collection false-flag fix.
 
 ---
 
@@ -144,54 +151,62 @@ canonical feature tables + whether `sample_name == PRO###`), Conrad (clinical).
 
 ---
 
-## 7. WHAT'S NEXT — priority order (Spencer's stated priorities)
-1. ✅ **DONE (2026-06-15) — Cron go-live.** `run_pipeline.sh` was already `chmod +x`; ran manually
-   end-to-end **twice**, exit 0 both times (~64s each, incl. Emma's tree), regenerating `INDEX.md` +
-   `FRESHNESS.md` cleanly with **zero errors/warnings** in `crawler/pipeline.log`. Verified
-   deterministic: between runs the only diff is each `dataset.yaml`'s `last_crawled` timestamp;
-   freshness stays `0 new / 0 changed`. Crontab installed alongside `protect-data-listing`:
-   `0 2 * * * /usr2/people/protect/protect-data-manifest/crawler/run_pipeline.sh`. (Note: both jobs
-   fire at exactly 2 AM UTC — concurrent, functionally fine; offset by a few minutes if I/O contention
-   ever matters.)
-2. ✅ **DONE (2026-06-15) — Exhaustive accuracy audit.** All 8 cards cross-checked file/column/sheet/
-   count against the real data (8 read-only verification agents + direct checks); 6 cards had mismatches,
-   all fixed (see §5 "Exhaustive audit round"). Manifest-only battery re-run (8 fresh sealed agents):
-   **8/8 correct, zero hallucinations**, honest "not found" on hemolytic activity, and every correction
-   independently confirmed from the corrected manifest.
-3. **Owner card review** — loop in Alex/SYK/Emma/Conrad to resolve the "to verify" flags. (Still
-   pending — Spencer chose to harden first; owners NOT yet pinged.) Remaining unresolved "to verify"
-   items the audit surfaced for owners: `sample_id`↔`ASMA_id` mapping for genomics QC/taxonomy (Alex);
-   canonical feature-table among `_manual`/`_quickrecover` species variants (Emma); `sample_name`==`PRO###`
-   (Emma); canonical workbook-per-assay + the corrupted `_20251222` headers (SYK); `subject_id`→`patient_id`
-   mapping (Conrad).
-4. **Roadmap v2** — a clean version folding in the naming scheme, federation, warehouse, and audit
-   findings (with a change log), ready to show Jake/Adam.
-5. **Deferred / v1+:**
-   - ✅ **DONE (2026-06-15) — `dataset.yaml` is now the explicit recency catalog.** `crawl.py` records
-     a per-resource **`mtime`** and per-subdirectory **`mtime`**, and computes **`latest_resource`**
-     (newest data file by mtime) + **`latest_subdir`** (newest dated run/export, with archive folders
-     like `previous_exports` excluded). Cards (clinical, lakehouse) and `skill/SKILL.md` now point at
-     these fields for "what's newest" instead of inferring from filenames. NB: `mtime` ≠ filename date
-     (e.g. `asma_phenotyping`'s most-recently-*modified* workbook is `_20250420`, not the newest-named
-     one) — `mtime` is the honest "last changed." For heterogeneous collections (genomics, roster)
-     `latest_resource`/`latest_subdir` are just "most-recently-modified" and aren't semantically
-     special; only the dated-pile collections cite them.
-   - ✅ **DONE (2026-06-22) — glob-scoped collections no longer false-flag.** `crawl.py` now derives a
-     glob collection's `size` + `source_mtime_latest` from its matched resources (and skips the subdir
-     digest) instead of walking the whole shared root — so `protect_sample_roster` (one CSV inside all
-     of `Zengler_Lab/`) stopped getting "possibly-stale" flags from Emma's unrelated sibling activity.
-   - **v1 candidates (roadmapped):** push notification (email/Slack) when the nightly freshness report
-     shows any flag — so maintenance becomes push, not pull (Spencer's 2026-06-22 ask); the **discovery
-     sweep** (scan `/usr2/people/protect` for un-registered data dirs); per-table schemas for the
-     lakehouse `.txt` exports; tighten the `candidate_keys` heuristic; broader directory coverage;
-     owner self-service `DATA_CARD`s; full owner card review (item 3).
-   - **v2:** a human GUI / NL query service (Metabase / DataHub / MCP) + live lakehouse query bridge.
+## 7. Status recap & WHAT'S NEXT
 
-6. **Source control — repo prepped (2026-06-22).** Local git repo initialized at the repo root (branch
-   `main`, initial commit, generated `pipeline.log`/`.last_snapshot.json` git-ignored), SSH remote set to
-   `git@github.com:WeArePROTECT/protect-data-manifest.git`. SSH auth works (Spencer-Long). **Blocked only
-   on creating the empty private repo** in the `WeArePROTECT` org (no `gh`/token on this host, so it's a
-   GitHub-UI step); after that, `git push -u origin main`. Nightly auto-commit+push is a possible v1 add.
+### v0 — COMPLETE, live, version-controlled, rolled out (sessions 2026-06-15 → 06-23)
+- ✅ **Cron live** — `0 2 * * * /usr2/people/protect/protect-data-manifest/crawler/run_pipeline.sh`
+  (2 AM UTC, alongside `protect-data-listing`). Verified deterministic; only per-run diff is `last_crawled`.
+- ✅ **Exhaustive accuracy audit** — all 8 cards vs the real data (8 verification agents + direct checks);
+  6 cards fixed (§5); manifest-only battery **8/8, zero hallucinations**.
+- ✅ **De-perishing + durability rule** — cards hold only DURABLE facts; perishables live in
+  `dataset.yaml`; rule codified in `templates/README.md` + §8.
+- ✅ **Recency catalog** — `crawl.py` records per-resource & per-subdir `mtime` and computes
+  `latest_resource` + `latest_subdir` (archive dirs excluded). NB: `mtime` ≠ filename date; only
+  dated-pile collections (clinical/lakehouse/warehouse) cite these — for heterogeneous collections
+  (genomics/roster) they're just "most-recently-modified."
+- ✅ **Glob-collection false-flag fix** — glob collections (e.g. `protect_sample_roster`) derive `size`
+  + `source_mtime_latest` from matched resources, not the whole shared root (stopped roster being
+  flagged by Emma's unrelated sibling activity).
+- ✅ **GitHub** — repo at **`WeArePROTECT/protect-data-manifest`** (private), branch `main`, pushed.
+  Generated `pipeline.log` / `.last_snapshot.json` git-ignored.
+- ✅ **Team rollout (2026-06-23)** — Slack announcement + scientist onboarding guide
+  `docs/PROTECT_Data_Manifest_User_Guide.docx` (covers connecting Claude to the server, installing the
+  skill via the skill-creator, asking for data, a worked example).
+
+### WHAT WE STILL NEED TO BUILD
+
+**① Owner card review — the MAIN GATE (start here).** All cards except `integration_pipeline_outputs`
+are DRAFT. Loop in each owner to sign off and resolve their "to verify" flags; when a card is validated,
+drop "DRAFT pending owner review" from its maintainer line. Open items by owner:
+- **Alex (genomics):** the `sample_id`↔`ASMA_id` mapping for the QC/taxonomy tables.
+- **Emma (metagenomics):** is `final_dataset_clean/` the canonical set? (it appeared 2026-06-19; the
+  card already points at it as likely-canonical, to confirm) and does `sample_name == PRO###`?
+- **SYK (phenotyping):** canonical workbook per assay type; the corrupted `_20251222` headers.
+- **Conrad (clinical):** the `subject_id` → `patient_id` mapping.
+
+**② v1 build items:**
+- **Push notifications** (email/Slack) when the nightly freshness report shows any flag — so maintenance
+  becomes push, not pull. *(Spencer's explicit v1 ask.)*
+- **Discovery sweep** — scan `/usr2/people/protect` for sizable data dirs not yet in `collections.yaml`.
+  The one real blind spot: the crawler only watches **registered** roots, so brand-new data products go
+  unseen until someone registers them.
+- **Nightly auto-commit + push** — keep the GitHub repo current without manual commits (the generated
+  `dataset.yaml`/`INDEX.md`/`FRESHNESS.md` churn on each crawl; today they need a manual commit).
+- **Per-table lakehouse schemas** — the export `.txt` tables are listed as dirs but their columns aren't parsed.
+- **Tighten `candidate_keys`** heuristic (it over-matches; the CARD.md keys are authoritative).
+- **Broader directory coverage** + **owner self-service `DATA_CARD`s** (Tier-3, for owners who want to maintain their own).
+- **Roadmap v2 doc** — clean version for Jake/Adam (naming scheme + federation + warehouse + audit, with a change log).
+
+**③ v2 vision:** a human-facing layer — NL query service (MCP) and/or a GUI (Metabase / DataHub), plus a
+live lakehouse query bridge — for non-agent users and richer search.
+
+### Git workflow (for the next agent)
+It's a git repo: `origin = git@github.com:WeArePROTECT/protect-data-manifest.git` (SSH auth works as
+Spencer-Long; **no `gh` CLI / API token on this host**). **Commit + push when you change things**, and
+end commit messages with the `Co-Authored-By: Claude …` trailer. Generated `pipeline.log` /
+`.last_snapshot.json` are git-ignored; the generated catalog (`dataset.yaml` / `INDEX.md` /
+`FRESHNESS.md`) **is** tracked, so it shows as modified after each nightly crawl until committed — the
+nightly auto-commit above would resolve that.
 
 ---
 
@@ -214,9 +229,10 @@ canonical feature tables + whether `sample_name == PRO###`), Conrad (clinical).
 
 ## 9. File map
 ```
-protect-data-manifest/
+protect-data-manifest/            (git repo → WeArePROTECT/protect-data-manifest, private)
 ├── README.md                       entry point
 ├── HANDOFF.md                      ← this file
+├── .gitignore                      ignores generated pipeline.log + .last_snapshot.json
 ├── manifest/
 │   ├── INDEX.md                    the catalog (agents start here)
 │   ├── LINKAGE.md                  the join map
@@ -225,10 +241,11 @@ protect-data-manifest/
 ├── crawler/
 │   ├── crawl.py  build_index.py  freshness_report.py  run_pipeline.sh
 │   ├── collections.yaml            the curated collection config
-│   └── .last_snapshot.json  pipeline.log   (generated)
+│   └── .last_snapshot.json  pipeline.log   (generated; git-ignored)
 ├── templates/                      dataset.yaml.template, CARD.md.template, README.md (the standard)
 ├── skill/SKILL.md                  the dedicated "find PROTECT data" skill
 └── docs/
+    ├── PROTECT_Data_Manifest_User_Guide.docx   team onboarding guide (shared 2026-06-23)
     ├── roadmap/protect_data_manifest_roadmap_v1.md   (partially superseded; see its Status section)
     ├── research/2026-06-15_catalog-landscape-and-design.md
     └── decisions/2026-06-15_audit-and-design-notes.md  +  notes_deferred.md
