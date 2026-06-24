@@ -1642,7 +1642,7 @@ subdirectories:
     .py: 1
 latest_subdir: gapseq
 freshness:
-  last_crawled: '2026-06-22T23:45:11Z'
+  last_crawled: '2026-06-23T09:00:57Z'
   source_mtime_latest: '2026-06-10T20:39:22Z'
   cadence_observed: null
 owner_manifest:

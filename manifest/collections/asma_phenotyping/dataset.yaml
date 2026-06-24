@@ -3858,7 +3858,7 @@ size:
 subdirectories: []
 latest_subdir: null
 freshness:
-  last_crawled: '2026-06-22T23:45:19Z'
+  last_crawled: '2026-06-23T09:01:05Z'
   source_mtime_latest: '2026-04-20T21:19:40Z'
   cadence_observed: null
 owner_manifest: null

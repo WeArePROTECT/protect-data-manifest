@@ -45,7 +45,7 @@ subdirectories:
   file_types: {}
 latest_subdir: integration_export_20260519_124658
 freshness:
-  last_crawled: '2026-06-22T23:43:07Z'
+  last_crawled: '2026-06-23T09:00:02Z'
   source_mtime_latest: '2026-05-19T20:00:51Z'
   cadence_observed: null
 owner_manifest:

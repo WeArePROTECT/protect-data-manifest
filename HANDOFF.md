@@ -176,10 +176,22 @@ canonical feature tables + whether `sample_name == PRO###`), Conrad (clinical).
      one) — `mtime` is the honest "last changed." For heterogeneous collections (genomics, roster)
      `latest_resource`/`latest_subdir` are just "most-recently-modified" and aren't semantically
      special; only the dated-pile collections cite them.
-   - lakehouse export **table** schemas: the export tables are flat `.txt` CSV (NOT parquet/Delta) that
-     the crawler lists as dirs but doesn't yet parse into per-table column schemas.
-   - broader directory coverage (more hot dirs / per-directory summaries); tighten the `candidate_keys`
-     heuristic; eventually a human GUI / Metabase (v2).
+   - ✅ **DONE (2026-06-22) — glob-scoped collections no longer false-flag.** `crawl.py` now derives a
+     glob collection's `size` + `source_mtime_latest` from its matched resources (and skips the subdir
+     digest) instead of walking the whole shared root — so `protect_sample_roster` (one CSV inside all
+     of `Zengler_Lab/`) stopped getting "possibly-stale" flags from Emma's unrelated sibling activity.
+   - **v1 candidates (roadmapped):** push notification (email/Slack) when the nightly freshness report
+     shows any flag — so maintenance becomes push, not pull (Spencer's 2026-06-22 ask); the **discovery
+     sweep** (scan `/usr2/people/protect` for un-registered data dirs); per-table schemas for the
+     lakehouse `.txt` exports; tighten the `candidate_keys` heuristic; broader directory coverage;
+     owner self-service `DATA_CARD`s; full owner card review (item 3).
+   - **v2:** a human GUI / NL query service (Metabase / DataHub / MCP) + live lakehouse query bridge.
+
+6. **Source control — repo prepped (2026-06-22).** Local git repo initialized at the repo root (branch
+   `main`, initial commit, generated `pipeline.log`/`.last_snapshot.json` git-ignored), SSH remote set to
+   `git@github.com:WeArePROTECT/protect-data-manifest.git`. SSH auth works (Spencer-Long). **Blocked only
+   on creating the empty private repo** in the `WeArePROTECT` org (no `gh`/token on this host, so it's a
+   GitHub-UI step); after that, `git push -u origin main`. Nightly auto-commit+push is a possible v1 add.
 
 ---
 
