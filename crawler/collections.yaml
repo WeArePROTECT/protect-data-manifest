@@ -67,7 +67,12 @@ collections:
     team: Kim (SYK)
     domain: Isolate phenotyping
     owner: {name: Sun-Young Kim, lab: Arkin}
-    tags: [PHENOTYPE, CARBON_UTILIZATION, REPORTER]
+    # FORMULATION: the `Competition` sheet is the Task-2.1 in-vitro formulation
+    #   exclusion screen (1–5-member SynComs vs 8 pathogen reporters, computed
+    #   Inhibition_percent) — the core formulation dataset.
+    # AMR: the `Antibiotic_resistance` sheet holds measured MIC (distinct from the
+    #   genomic AMR-gene predictions in asma_genomics/amrfinder.tsv).
+    tags: [PHENOTYPE, CARBON_UTILIZATION, REPORTER, FORMULATION, AMR]
 
   # ---- Zengler — Metagenomics / MIND ----------------------------------------
   - id: zengler_metagenomics_mind
@@ -76,7 +81,10 @@ collections:
     team: Zengler
     domain: Metagenomics / MIND
     owner: {name: Emma Rooholfada, lab: Zengler}
-    tags: [MULTI_OMICS, MIND, METAGENOMICS, METATRANSCRIPTOMICS]
+    # FORMULATION: the MIND/data/*.tsv hold prebiotic-candidate + PA-competitor
+    #   predictions (Task 1.2 / 2.1) — direct formulation-design inputs (which
+    #   prebiotics to add; which commensals compete with the pathogen).
+    tags: [MULTI_OMICS, MIND, METAGENOMICS, METATRANSCRIPTOMICS, FORMULATION]
     scan_depth: 2
     max_resources: 60
 

@@ -2,7 +2,7 @@
 # Human-owned card. The crawler NEVER edits this file.
 collection_id: integration_pipeline_outputs
 maintainer: Spencer Long (Arkin data team)
-last_reviewed: 2026-06-15
+last_reviewed: 2026-07-22
 summary: The integration pipeline's dated-run outputs — the cleaned + linked "warehouse" tables. Holds the canonical CLEANED REDCap clinical, cleaned Conrad micro/sample data, the merged clinical⨝isolate⨝sample⨝patient table, and the multiomics integration. The analysis-ready, joined PROTECT data. Newest run is current; outputs vary by run.
 keywords: [cleaned clinical, cleaned REDCap, clinical clean, merged table, clinical isolate sample patient merged, multiomics integration, integrated data, platinum, warehouse, pipeline outputs, pipeline runs, cleaned microbiology, cleaned sample metadata, analysis-ready, joined data, integration pipeline]
 related: [patient_sample_isolate_linkage, clinical_redcap_raw, asma_genomics, asma_phenotyping, zengler_metagenomics_mind]
@@ -32,6 +32,23 @@ Most warehouse tables are standardized to the cohort keys — **`patient_id`**, 
   `ASMA_id`) or `protect_conrad_sample_data_clean` (`sample_id` + `patient_id`) as the bridge.
 - The merged and multiomics tables are **pre-joined** and carry `patient_id` directly — often you
   don't need to re-join through the hub at all (see `manifest/LINKAGE.md`).
+
+## Patient cohort / disease classification (CF vs non-CF)
+There is **no single "CF vs non-CF" column**, so an agent must **not** report the cohort as CF-only —
+it includes **non-CF bronchiectasis** patients (plus healthy donors). The relevant fields, in the
+merged / cleaned-clinical tables:
+- **`patient_status`** (merged table) — coded cohort labels (`A1` / `B1` / `C1` / `D1` / `D2`) that
+  encode the enrollment/disease group. **What each code means is not documented here — to verify with
+  the Conrad team** (which codes are CF vs non-CF bronchiectasis vs other).
+- **`cftr_modulator_status`** — the patient's CFTR-modulator drug (`Trikafta` / `Kalydeco` / `Alyftrek`
+  / `Symdeko` / …) or blank/`None`. A named modulator strongly implies a **CF** patient; blank/`None`
+  implies not on a modulator (often non-CF). This is an *inference*, not a definitive diagnosis label.
+- **`age_group`** (`adult`/`pediatric`) and the linkage `patient_type` (`adult`/`pediatric`/`healthy_donor`)
+  are **age/donor axes, not disease** — don't use them for CF vs non-CF.
+
+So the cohort spans CF **and** non-CF bronchiectasis (plus healthy donors); the precise CF/non-CF split
+lives in the `patient_status` codes (meaning **to confirm with Conrad**), with `cftr_modulator_status`
+as a supporting signal.
 
 ## Products in this collection (latest run)
 > Row counts vary by run and are **not** hand-listed here — read the sibling `dataset.yaml` (it

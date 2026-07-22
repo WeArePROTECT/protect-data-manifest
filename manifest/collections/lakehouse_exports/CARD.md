@@ -2,7 +2,7 @@
 # Human-owned card. The crawler NEVER edits this file.
 collection_id: lakehouse_exports
 maintainer: Spencer Long (Arkin Lab)
-last_reviewed: 2026-06-15
+last_reviewed: 2026-07-22
 summary: Dated snapshot exports of PROTECT tables staged to/from the KBase lakehouse (integration + mind-analysis namespaces). The window into what exists in the lakehouse for people who can't query it directly yet.
 keywords: [lakehouse, KBase, data lake, exports, txt export tables, integration export, mind-analysis export, lakehouse tables, staged data, cleaned tables, silver layer]
 related: [patient_sample_isolate_linkage, zengler_metagenomics_mind]
@@ -22,6 +22,9 @@ and when*, even though they can't query the lakehouse directly yet. The exports 
 |---|---|
 | `integration_export_<date>/` | integration namespace — the linked/cleaned ("Silver Layer") tables |
 | `mind-analysis_export_<date>/` | mind-analysis namespace — Zengler MIND outputs |
+| `phenotype_export_<date>/` | `protect_phenotype` — SYK phenotyping: `carbon_utilization`, `growth_curve_scfm`, `antibiotic_resistance` |
+| `formulation_export_<date>/` | `protect_formulation` — SYK formulation exclusion screen: `competition_screen` |
+| `refinery-bronze_export_<date>/` | `protect_refinery_bronze` — aparkin's frozen Bronze-layer refinery: 23 tables in a `dim_`/`fact_`/`bridge_`/`dict_` star schema (~30.6M rows) |
 | `previous_exports/` | archived earlier snapshots |
 
 > The **current dated export dirs and their dates** live in the sibling `dataset.yaml`: each entry in

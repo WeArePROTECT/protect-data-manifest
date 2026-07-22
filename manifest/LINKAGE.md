@@ -54,5 +54,14 @@ samples). The **cleaned clinical** keyed on `patient_id` is there too (`protect_
   `patient_id` appears in the warehouse **merged / sample / multiomics** tables — use those to bridge.
 - **Genomics has two id systems.** `amrfinder`/`metaVF`/`checkm2` use `ASMA_id`; `gtdbtk`/QC use a
   sequencing `sample_id`. Their mapping is unverified in-collection — confirm with Alex.
+- **No single "CF vs non-CF" column — the cohort is NOT CF-only.** It spans CF *and* non-CF
+  bronchiectasis (plus healthy donors). Disease cohort is coded in the clinical **`patient_status`**
+  (`A1`/`B1`/`C1`/`D1`/`D2` — meaning to verify with Conrad) in `integration_pipeline_outputs`, with
+  **`cftr_modulator_status`** (a CF drug, or blank) as a supporting signal. `patient_type`/`age_group`
+  are age/donor axes, not disease — don't answer "CF vs non-CF" from them.
+- **Three isolate counts, all correct — don't read a subset as "missing" isolates.** The *full* ASMA
+  collection is **5,019** (`ASMA-1…ASMA-5019`, this gold table). **~4,900** have a genome assembly (the
+  `asma_genomics` tables — so those tables won't contain every `ASMA_id`). A further **~4,300**
+  genome-typed + strain-clustered subset feeds downstream decision sheets.
 
 _Maintained by hand (semantic). To verify items are flagged above and in the per-collection cards._

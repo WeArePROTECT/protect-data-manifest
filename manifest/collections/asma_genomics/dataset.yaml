@@ -15,7 +15,7 @@ tags:
 - TAXONOMY
 - ISOLATE
 notes:
-- resource list truncated to 60 of 73 data files
+- resource list truncated to 60 of 132 data files
 access:
   status: open
   readable_by:
@@ -607,6 +607,443 @@ resources:
       type: string
     candidate_keys:
     - isolate_id
+- path: growth/predicted-growers-lacking-data.tsv
+  format: tsv
+  size_bytes: 32424
+  mtime: '2026-06-25T22:47:50Z'
+  rows: 674
+  sheet: null
+  schema:
+    fields:
+    - name: ASMA_id
+      type: string
+    - name: sg
+      type: integer
+    - name: Genus
+      type: string
+    - name: Species
+      type: string
+    candidate_keys:
+    - ASMA_id
+- path: growth/scfm-growth.tsv
+  format: tsv
+  size_bytes: 1964957
+  mtime: '2026-06-24T22:45:45Z'
+  rows: 959
+  sheet: null
+  schema:
+    fields:
+    - name: ASMA_id
+      type: string
+    - name: strain_type
+      type: string
+    - name: assay_start_date
+      type: date
+    - name: assay_condition_type
+      type: string
+    - name: replicate
+      type: integer
+    - name: sample_id
+      type: integer
+    - name: n_timepoints
+      type: integer
+    - name: final_OD
+      type: number
+    - name: max_OD
+      type: number
+    - name: source_files
+      type: string
+    - name: source_files_n
+      type: integer
+    - name: cyc_1
+      type: number
+    - name: cyc_2
+      type: number
+    - name: cyc_3
+      type: number
+    - name: cyc_4
+      type: number
+    - name: cyc_5
+      type: number
+    - name: cyc_6
+      type: number
+    - name: cyc_7
+      type: number
+    - name: cyc_8
+      type: number
+    - name: cyc_9
+      type: number
+    - name: cyc_10
+      type: number
+    - name: cyc_11
+      type: number
+    - name: cyc_12
+      type: number
+    - name: cyc_13
+      type: number
+    - name: cyc_14
+      type: number
+    - name: cyc_15
+      type: number
+    - name: cyc_16
+      type: number
+    - name: cyc_17
+      type: number
+    - name: cyc_18
+      type: number
+    - name: cyc_19
+      type: number
+    - name: cyc_20
+      type: number
+    - name: cyc_21
+      type: number
+    - name: cyc_22
+      type: number
+    - name: cyc_23
+      type: number
+    - name: cyc_24
+      type: number
+    - name: cyc_25
+      type: number
+    - name: cyc_26
+      type: number
+    - name: cyc_27
+      type: number
+    - name: cyc_28
+      type: number
+    - name: cyc_29
+      type: number
+    - name: cyc_30
+      type: number
+    - name: cyc_31
+      type: number
+    - name: cyc_32
+      type: number
+    - name: cyc_33
+      type: number
+    - name: cyc_34
+      type: number
+    - name: cyc_35
+      type: number
+    - name: cyc_36
+      type: number
+    - name: cyc_37
+      type: number
+    - name: cyc_38
+      type: number
+    - name: cyc_39
+      type: number
+    - name: cyc_40
+      type: number
+    - name: cyc_41
+      type: number
+    - name: cyc_42
+      type: number
+    - name: cyc_43
+      type: number
+    - name: cyc_44
+      type: number
+    - name: cyc_45
+      type: number
+    - name: cyc_46
+      type: number
+    - name: cyc_47
+      type: number
+    - name: cyc_48
+      type: number
+    - name: cyc_49
+      type: number
+    - name: cyc_50
+      type: number
+    - name: cyc_51
+      type: number
+    - name: cyc_52
+      type: number
+    - name: cyc_53
+      type: number
+    - name: cyc_54
+      type: number
+    - name: cyc_55
+      type: number
+    - name: cyc_56
+      type: number
+    - name: cyc_57
+      type: number
+    - name: cyc_58
+      type: number
+    - name: cyc_59
+      type: number
+    - name: cyc_60
+      type: number
+    - name: cyc_61
+      type: number
+    - name: cyc_62
+      type: number
+    - name: cyc_63
+      type: number
+    - name: cyc_64
+      type: number
+    - name: cyc_65
+      type: number
+    - name: cyc_66
+      type: number
+    - name: cyc_67
+      type: number
+    - name: cyc_68
+      type: number
+    - name: cyc_69
+      type: number
+    - name: cyc_70
+      type: number
+    - name: cyc_71
+      type: number
+    - name: cyc_72
+      type: number
+    - name: cyc_73
+      type: number
+    - name: cyc_74
+      type: number
+    - name: cyc_75
+      type: number
+    - name: cyc_76
+      type: number
+    - name: cyc_77
+      type: number
+    - name: cyc_78
+      type: number
+    - name: cyc_79
+      type: number
+    - name: cyc_80
+      type: number
+    - name: cyc_81
+      type: number
+    - name: cyc_82
+      type: number
+    - name: cyc_83
+      type: number
+    - name: cyc_84
+      type: number
+    - name: cyc_85
+      type: number
+    - name: cyc_86
+      type: number
+    - name: cyc_87
+      type: number
+    - name: cyc_88
+      type: number
+    - name: cyc_89
+      type: number
+    - name: cyc_90
+      type: number
+    - name: cyc_91
+      type: number
+    - name: cyc_92
+      type: number
+    - name: cyc_93
+      type: number
+    - name: cyc_94
+      type: number
+    - name: cyc_95
+      type: number
+    - name: cyc_96
+      type: number
+    - name: cyc_97
+      type: number
+    - name: cyc_98
+      type: number
+    - name: cyc_99
+      type: number
+    - name: cyc_100
+      type: number
+    - name: cyc_101
+      type: number
+    - name: cyc_102
+      type: number
+    - name: cyc_103
+      type: number
+    - name: cyc_104
+      type: number
+    - name: cyc_105
+      type: number
+    - name: cyc_106
+      type: number
+    - name: cyc_107
+      type: number
+    - name: cyc_108
+      type: number
+    - name: cyc_109
+      type: number
+    - name: cyc_110
+      type: number
+    - name: cyc_111
+      type: number
+    - name: cyc_112
+      type: number
+    - name: cyc_113
+      type: number
+    - name: cyc_114
+      type: number
+    - name: cyc_115
+      type: number
+    - name: cyc_116
+      type: number
+    - name: cyc_117
+      type: number
+    - name: cyc_118
+      type: number
+    - name: cyc_119
+      type: number
+    - name: cyc_120
+      type: number
+    - name: cyc_121
+      type: number
+    - name: cyc_122
+      type: number
+    - name: cyc_123
+      type: number
+    - name: cyc_124
+      type: number
+    - name: cyc_125
+      type: number
+    - name: cyc_126
+      type: number
+    - name: cyc_127
+      type: number
+    - name: cyc_128
+      type: number
+    - name: cyc_129
+      type: number
+    - name: cyc_130
+      type: number
+    - name: cyc_131
+      type: number
+    - name: cyc_132
+      type: number
+    - name: cyc_133
+      type: number
+    - name: cyc_134
+      type: number
+    - name: cyc_135
+      type: number
+    - name: cyc_136
+      type: number
+    - name: cyc_137
+      type: number
+    - name: cyc_138
+      type: number
+    - name: cyc_139
+      type: number
+    - name: cyc_140
+      type: number
+    - name: cyc_141
+      type: number
+    - name: cyc_142
+      type: number
+    - name: cyc_143
+      type: number
+    - name: cyc_144
+      type: number
+    - name: cyc_145
+      type: number
+    - name: cyc_146
+      type: number
+    - name: cyc_147
+      type: number
+    - name: cyc_148
+      type: number
+    - name: cyc_149
+      type: number
+    - name: cyc_150
+      type: number
+    - name: cyc_151
+      type: number
+    - name: cyc_152
+      type: number
+    - name: cyc_153
+      type: number
+    - name: cyc_154
+      type: number
+    - name: cyc_155
+      type: number
+    - name: cyc_156
+      type: number
+    - name: cyc_157
+      type: number
+    - name: cyc_158
+      type: number
+    - name: cyc_159
+      type: number
+    - name: cyc_160
+      type: number
+    - name: cyc_161
+      type: number
+    - name: cyc_162
+      type: number
+    - name: cyc_163
+      type: number
+    - name: cyc_164
+      type: number
+    - name: cyc_165
+      type: number
+    - name: cyc_166
+      type: number
+    - name: cyc_167
+      type: number
+    - name: cyc_168
+      type: number
+    - name: cyc_169
+      type: number
+    - name: cyc_170
+      type: number
+    - name: cyc_171
+      type: number
+    - name: cyc_172
+      type: number
+    - name: cyc_173
+      type: number
+    - name: cyc_174
+      type: number
+    - name: cyc_175
+      type: number
+    - name: cyc_176
+      type: number
+    - name: cyc_177
+      type: number
+    - name: cyc_178
+      type: number
+    - name: cyc_179
+      type: number
+    - name: cyc_180
+      type: number
+    - name: cyc_181
+      type: number
+    - name: cyc_182
+      type: number
+    - name: cyc_183
+      type: number
+    - name: cyc_184
+      type: number
+    - name: cyc_185
+      type: number
+    - name: cyc_186
+      type: number
+    - name: cyc_187
+      type: number
+    - name: cyc_188
+      type: number
+    - name: cyc_189
+      type: number
+    - name: cyc_190
+      type: number
+    - name: cyc_191
+      type: number
+    - name: cyc_192
+      type: number
+    - name: cyc_193
+      type: number
+    candidate_keys:
+    - ASMA_id
+    - sample_id
 - path: gtdbtk/align/gtdbtk.ar53.filtered.tsv
   format: tsv
   size_bytes: 199
@@ -1459,33 +1896,7 @@ resources:
         §6 + alt routes.'
       type: string
     candidate_keys: []
-- path: mucin/config/minimal-medium.csv
-  format: csv
-  size_bytes: 1102
-  mtime: '2026-06-11T17:06:43Z'
-  rows: 28
-  sheet: null
-  schema:
-    fields:
-    - name: compounds
-      type: string
-    - name: name
-      type: string
-    - name: maxFlux
-      type: string
-    candidate_keys: []
-- path: mucin/config/monomers.tsv
-  format: tsv
-  size_bytes: 1949
-  mtime: '2026-06-09T23:15:21Z'
-  rows: 16
-  sheet: null
-  schema:
-    fields:
-    - name: '# Target mucin O-glycan monomers (airway MUC5AC/MUC5B). Derived from WORKFLOW-PLAN.md §0.'
-      type: string
-    candidate_keys: []
-latest_resource: mucin/config/gapseq-substrates.tsv
+latest_resource: growth/predicted-growers-lacking-data.tsv
 size:
   total_bytes: 28933860522
   file_count: 20000
@@ -1505,9 +1916,9 @@ subdirectories:
   file_types:
     .md: 1
 - name: PA-exploratory
-  mtime: '2026-05-28T19:17:11Z'
+  mtime: '2026-07-02T03:53:01Z'
   immediate_files: 2
-  immediate_subdirs: 7
+  immediate_subdirs: 8
   immediate_bytes: 6234
   file_types:
     .sh: 1
@@ -1533,17 +1944,27 @@ subdirectories:
     .txt: 1
     .py: 1
 - name: gapseq
-  mtime: '2026-06-22T08:57:26Z'
-  immediate_files: 25
-  immediate_subdirs: 783
-  immediate_bytes: 3251318
+  mtime: '2026-06-25T21:15:53Z'
+  immediate_files: 18
+  immediate_subdirs: 3
+  immediate_bytes: 7331070
   file_types:
-    .sh: 6
-    .py: 6
+    .tsv: 5
     .md: 4
-    .tsv: 3
+    .png: 4
     .csv: 2
     .json: 1
+    .dot: 1
+- name: growth
+  mtime: '2026-06-25T22:47:50Z'
+  immediate_files: 17
+  immediate_subdirs: 0
+  immediate_bytes: 6050919
+  file_types:
+    .py: 7
+    .png: 7
+    .tsv: 2
+    .md: 1
 - name: gtdbtk
   mtime: '2026-05-15T02:40:37Z'
   immediate_files: 7
@@ -1556,7 +1977,7 @@ subdirectories:
     .txt: 1
     .json: 1
 - name: isolates
-  mtime: '2026-05-15T17:50:10Z'
+  mtime: '2026-07-01T09:40:25Z'
   immediate_files: 5
   immediate_subdirs: 4938
   immediate_bytes: 63118
@@ -1583,17 +2004,29 @@ subdirectories:
     .sh: 1
     .csv: 1
 - name: mucin
-  mtime: '2026-06-17T17:53:39Z'
-  immediate_files: 12
+  mtime: '2026-06-29T20:31:21Z'
+  immediate_files: 14
   immediate_subdirs: 7
-  immediate_bytes: 753155
+  immediate_bytes: 768146
   file_types:
-    .md: 4
+    .md: 6
     .py: 4
     .sh: 1
     .txt: 1
     .ids: 1
     .png: 1
+- name: mucmunch
+  mtime: '2026-07-21T17:07:20Z'
+  immediate_files: 18
+  immediate_subdirs: 8
+  immediate_bytes: 1494206
+  file_types:
+    .md: 6
+    .py: 5
+    .png: 2
+    .tsv: 2
+    .ids: 1
+    .txt: 1
 - name: new-seqs
   mtime: '2026-02-20T21:29:23Z'
   immediate_files: 0
@@ -1631,6 +2064,15 @@ subdirectories:
     (noext): 6
     .json: 1
     .r: 1
+- name: temp-figure
+  mtime: '2026-07-21T23:42:45Z'
+  immediate_files: 3
+  immediate_subdirs: 0
+  immediate_bytes: 292564
+  file_types:
+    .py: 1
+    .csv: 1
+    .png: 1
 - name: temp-figures
   mtime: '2026-06-04T15:59:36Z'
   immediate_files: 6
@@ -1640,11 +2082,11 @@ subdirectories:
     .tsv: 3
     .png: 2
     .py: 1
-latest_subdir: gapseq
+latest_subdir: temp-figure
 freshness:
-  last_crawled: '2026-06-23T09:00:57Z'
-  source_mtime_latest: '2026-06-10T20:39:22Z'
+  last_crawled: '2026-07-22T09:06:52Z'
+  source_mtime_latest: '2026-07-21T23:21:15Z'
   cadence_observed: null
 owner_manifest:
   path: /usr2/people/alex.styer/protect/MANIFEST.md
-  last_updated_claimed: '2026-06-17'
+  last_updated_claimed: '2026-07-08'

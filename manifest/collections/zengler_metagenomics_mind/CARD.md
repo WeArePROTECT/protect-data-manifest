@@ -2,9 +2,9 @@
 # Human-owned card. The crawler NEVER edits this file.
 collection_id: zengler_metagenomics_mind
 maintainer: Spencer Long (Arkin Lab) — DRAFT, pending review by Emma Rooholfada (Zengler)
-last_reviewed: 2026-06-22
+last_reviewed: 2026-07-22
 summary: Emma's metagenomic (metaG) + metatranscriptomic (metaRS) analysis of PROTECT respiratory samples — OGU taxonomy/function feature tables across clustering thresholds, a custom respiratory reference DB, MAGs, and MIND-analysis inputs. The omics half of the cohort. Large and evolving; join to patients via sample id (PRO###), NOT ASMA_id.
-keywords: [metagenomics, metaG, metatranscriptomics, metaRS, MIND, niche, OGU, operational genomic unit, feature table, KO, KEGG, functional abundance, taxonomy, species abundance, custom database, reference database, WoL, web of life, MAGs, bakta, ANI cluster, clustering, respiratory microbiome, omics, Emma, Rooholfada, Zengler]
+keywords: [metagenomics, metaG, metatranscriptomics, metaRS, MIND, niche, OGU, operational genomic unit, feature table, KO, KEGG, functional abundance, taxonomy, species abundance, custom database, reference database, WoL, web of life, MAGs, bakta, ANI cluster, clustering, respiratory microbiome, omics, formulation, formulation input, prebiotic, prebiotic candidates, PA competitor, competitor prediction, MIND_candidate_prebiotics, Emma, Rooholfada, Zengler]
 related: [patient_sample_isolate_linkage, protect_sample_roster, clinical_redcap_raw]
 ---
 

@@ -2,9 +2,9 @@
 # Human-owned card. The crawler NEVER edits this file.
 collection_id: asma_phenotyping
 maintainer: Spencer Long (Arkin Lab) — DRAFT, pending review by Sun-Young Kim (SYK)
-last_reviewed: 2026-06-15
-summary: Lab-measured phenotypes for the ASMA isolates — growth curves (BHI/SCFM), carbon & amino-acid utilization, PA reporter inhibition/competition assays, and measured antibiotic resistance. The phenotype half of the ASMA collection. Join to the rest of PROTECT via ASMA_id (NOT the local sample_id).
-keywords: [phenotype, growth curve, growth, OD600, SCFM, BHI, carbon utilization, carbon source, sole carbon, carbon kinetics, amino acid utilization, reporter, PA reporter, inhibition, pairwise interaction, competition assay, antibiotic resistance, measured AMR, MIC, isolate stock list, ASMA_list, APL metadata, Sun-Young Kim, SYK]
+last_reviewed: 2026-07-22
+summary: Lab-measured phenotypes for the ASMA isolates — growth curves (BHI/SCFM), carbon & amino-acid utilization, PA reporter inhibition/competition assays, and measured antibiotic resistance. The phenotype half of the ASMA collection. IMPORTANT — the `Competition` sheet is the Task-2.1 in-vitro FORMULATION exclusion screen (1–5-member SynComs vs 8 pathogen reporters, computed Inhibition_percent). Join to the rest of PROTECT via ASMA_id (NOT the local sample_id).
+keywords: [phenotype, growth curve, growth, OD600, SCFM, BHI, carbon utilization, carbon source, sole carbon, carbon kinetics, amino acid utilization, reporter, PA reporter, inhibition, pairwise interaction, competition assay, formulation, formulation screen, in vitro exclusion, competitive exclusion, SynCom, community formulation, Inhibition_percent, PA14, PAO1, VAP pathogen, antibiotic resistance, measured AMR, MIC, isolate stock list, ASMA_list, APL metadata, Sun-Young Kim, SYK]
 related: [patient_sample_isolate_linkage, asma_genomics]
 ---
 
@@ -18,6 +18,15 @@ Lab-measured **phenotypes** for the ASMA isolates, produced by Sun-Young Kim (SY
 carbon/amino-acid utilization, *Pseudomonas aeruginosa* reporter inhibition/competition assays, and
 measured antibiotic resistance — the **phenotype half of the ASMA collection** (the genomic half is
 `asma_genomics`). Lives at `/usr2/people/protect/Arkin_Lab/SYK`.
+
+**This collection also holds the core FORMULATION data.** The `Competition` sheet in the
+`ASMA_phenotype_*.xlsx` workbooks is the **Task-2.1 in-vitro formulation exclusion screen**: 1–5-member
+SynCom communities (`ASMA_A_id`…`ASMA_E_id`) co-cultured with a fluorescent pathogen reporter
+(`Reporter_id` — 8 reporters incl. PA14, PAO1, clinical PA, and VAP-expansion AB/KP/SA), readout =
+computed `Inhibition_percent`. That is why this collection carries the `FORMULATION` facet even though
+its id leads with "phenotyping." The screen (and the phenotyping assays) are being brought onto the
+KBase lakehouse — the `Competition` screen → **`protect_formulation`**; the carbon/growth/AMR assays →
+**`protect_phenotype`** (see the `A_formulation` track under `task_4_3_and_4_4/`).
 
 ## How it connects (join keys)
 - **Join to the rest of PROTECT on `ASMA_id`** → the `patient_sample_isolate_linkage` hub →
@@ -35,7 +44,8 @@ measured antibiotic resistance — the **phenotype half of the ASMA collection**
 - *"Growth phenotype of the ASMA isolates?"* → growth curves: `ASMA_phenotype.xlsx [growth_curve]` (BHI) and the SCFM curves in `ASMA_phenotype_20250420.xlsx [Growth_Curve_SCFM]` / `ASMA_phenotype_20251209.xlsx` / `_20251222.xlsx [SCFM_growth_curve]`. Columns `cyc_1…cyc_193` are raw OD600 timepoints (see Caveats — no derived metric).
 - *"Which carbon sources can isolate X use?"* → `ASMA_phenotype.xlsx [carbon_utilization]` (OD per single carbon/amino-acid source) or `ASMA_phenotype_20250420.xlsx [Carbon_utilization_binary]`; time-series kinetics in the dated `ASMA_carbon_kinetics_*.xlsx` workbooks (use the newest — `dataset.yaml` lists the current set).
 - *"Measured antibiotic resistance (MICs)?"* → `ASMA_phenotype_20250420.xlsx [Antibiotic_resistance]` (KAN/CHL/CB/TET/STR/SPE/GEN). **This is measured phenotype — for genomic AMR gene predictions use `asma_genomics/amrfinder.tsv`.**
-- *"PA inhibition / who inhibits whom?"* → `ASMA_phenotype.xlsx [pairwise_interaction]` (bacterium vs PA reporter) and `ASMA_phenotype_20250420.xlsx [Competition]` (3-way community competition, `Inhibition_percent`).
+- *"PA inhibition / who inhibits whom?"* → `ASMA_phenotype.xlsx [pairwise_interaction]` (bacterium vs PA reporter) and the `Competition` sheet (see next).
+- *"Which formulations exclude the pathogen in vitro / by how much?"* → the **`Competition`** sheet in the newest `ASMA_phenotype_*.xlsx` (Task-2.1 exclusion screen): `ASMA_A_id`…`ASMA_E_id` define the 1–5-member SynCom, `Reporter_id` the pathogen (PA14/PAO1/clinical-PA/AB/KP/SA), `Inhibition_percent` the readout. On the lakehouse as `protect_formulation.competition_screen`.
 - *"Where is isolate ASMA-#### physically stocked?"* → `ASMA_list.xlsx` (`stock_location`, `CP1_plate`, `growth_media`).
 
 ## Data dictionary (files & what they hold)
@@ -44,9 +54,10 @@ measured antibiotic resistance — the **phenotype half of the ASMA collection**
 | `ASMA_phenotype.xlsx` → `growth_curve`, `positive_growth` | BHI growth curves (`cyc_*` OD600) |
 | `ASMA_phenotype.xlsx` → `carbon_utilization` | OD per single carbon/amino-acid source |
 | `ASMA_phenotype.xlsx` → `pairwise_interaction`, `inhibition_standard_control` | PA reporter inhibition assays |
-| `ASMA_phenotype_20250420.xlsx` → `Growth_Curve_SCFM`, `Carbon_utilization_binary`, `Competition`, `Antibiotic_resistance` | SCFM growth, binary carbon, community competition, **measured AMR** |
+| `ASMA_phenotype_20250420.xlsx` (2025-era) → `Growth_Curve_SCFM`, `Carbon_utilization_binary`, `Competition`, `Antibiotic_resistance` | SCFM growth, binary carbon, **formulation exclusion screen** (Task 2.1; 1–5-member SynComs vs pathogen reporters → `Inhibition_percent`), **measured AMR** (MIC) |
 | `ASMA_phenotype_20251209.xlsx`, `_20251222.xlsx` → `SCFM_growth_curve`, `carbon_utilization` | Newer growth + carbon (see Caveats re: `_20251222`) |
-| `ASMA_carbon_kinetics_*.xlsx` (dated) → `drop_off`, `sole_carbon` | Carbon-source utilization **kinetics** time series (dated workbooks; use the newest — see `dataset.yaml`) |
+| ⚠️ **Newest workbook (mid-2026, e.g. `ASMA_phenotype_20260714.xlsx`) restructured the sheets** | plate-format split + version suffixes: growth = `Growth_Curve_SCFM_384` / `Growth_Curve_single_384` / `Growth_Curve_single_96` / `Growth_Curve_dropoff_384`; AMR = `Antibiotic_resistance_v1` / `_v2`; endpoints = `Carbon_utilization_endpoint_v1`, `Growth_endpoint`; `Competition` retained. **The bare sheet names above are 2025-era only** — check `dataset.yaml` (`latest_resource`) for the current file's exact sheets |
+| `ASMA_carbon_kinetics_*.xlsx` (dated) → `drop_off`/`sole_carbon` (older); `drop_off_384well` / `single_carbon_384well` / `single_carbon_96well` (since `_20260623`) | Carbon-source utilization **kinetics** time series (use the newest — see `dataset.yaml`) |
 | `ASMA_list.xlsx` | Isolate stock list (`ASMA_id` → location/plate/media) |
 | `APL_metadata.xlsx` | APL-named isolate metadata (`patient_id`, `sputum_id`, `APL_id`) — *relationship to ASMA naming to verify with SYK* |
 

@@ -7,6 +7,10 @@ to be read by a Claude agent first, humans second.
 > **Pointing a Claude agent here? Start at [`manifest/INDEX.md`](manifest/INDEX.md)** — the catalog —
 > or load the skill in [`skill/`](skill/). Everything else below is orientation.
 
+> **Found an error, or have a fix / data to add?** See [`feedback/REPORTING.md`](feedback/REPORTING.md) —
+> point your agent at it to file a structured report. Changes are verified + applied by the maintainer,
+> so the catalog stays trustworthy (nobody edits the shared source of truth directly).
+
 ## How an agent uses this manifest
 1. **Open [`manifest/INDEX.md`](manifest/INDEX.md).** It lists every collection with a one-line
    `summary`, `tags`, `keywords`, path, and access status, plus a facet index (`tag → collections`).

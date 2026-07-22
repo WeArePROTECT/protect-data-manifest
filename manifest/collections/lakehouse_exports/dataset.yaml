@@ -19,15 +19,22 @@ access:
 resources: []
 latest_resource: null
 size:
-  total_bytes: 46010042738
-  file_count: 79
+  total_bytes: 48242337288
+  file_count: 120
   truncated: false
 subdirectories:
-- name: integration_export_20260519_124658
-  mtime: '2026-05-19T19:47:00Z'
+- name: formulation_export_20260701_171043
+  mtime: '2026-07-02T00:10:52Z'
+  immediate_files: 2
+  immediate_subdirs: 1
+  immediate_bytes: 5293414
+  file_types:
+    .txt: 2
+- name: integration_export_20260701_143013
+  mtime: '2026-07-01T21:30:15Z'
   immediate_files: 7
   immediate_subdirs: 1
-  immediate_bytes: 2970624
+  immediate_bytes: 3298232
   file_types:
     .txt: 7
 - name: mind-analysis_export_20260429_150000
@@ -37,16 +44,30 @@ subdirectories:
   immediate_bytes: 22993986266
   file_types:
     .txt: 31
+- name: phenotype_export_20260701_171343
+  mtime: '2026-07-02T00:13:48Z'
+  immediate_files: 4
+  immediate_subdirs: 1
+  immediate_bytes: 2190377
+  file_types:
+    .txt: 4
 - name: previous_exports
-  mtime: '2026-05-19T20:00:51Z'
+  mtime: '2026-07-01T22:05:56Z'
   immediate_files: 0
-  immediate_subdirs: 2
+  immediate_subdirs: 3
   immediate_bytes: 0
   file_types: {}
-latest_subdir: integration_export_20260519_124658
+- name: refinery-bronze_export_20260624_155541
+  mtime: '2026-06-24T22:58:22Z'
+  immediate_files: 24
+  immediate_subdirs: 1
+  immediate_bytes: 2221472846
+  file_types:
+    .txt: 24
+latest_subdir: phenotype_export_20260701_171343
 freshness:
-  last_crawled: '2026-06-23T09:00:02Z'
-  source_mtime_latest: '2026-05-19T20:00:51Z'
+  last_crawled: '2026-07-22T09:00:03Z'
+  source_mtime_latest: '2026-07-02T00:13:48Z'
   cadence_observed: null
 owner_manifest:
   path: /usr2/people/protect/Arkin_Lab/protect_data/protect_lakehouse_pipeline/data/exports/README.md

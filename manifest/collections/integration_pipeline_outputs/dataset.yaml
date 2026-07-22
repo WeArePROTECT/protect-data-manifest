@@ -17,17 +17,17 @@ tags:
 - MICROBIOLOGY
 - SAMPLE_METADATA
 notes:
-- 'resources taken from latest run: 5_21_26'
+- 'resources taken from latest run: 6_24_26'
 access:
   status: open
   readable_by:
   - all
   request_to: null
 resources:
-- path: 5_21_26/protect_clinical_isolate_sample_patient_merged_5_21_26.csv
+- path: 6_24_26/protect_clinical_isolate_sample_patient_merged_6_24_26.csv
   format: csv
   size_bytes: 2537310
-  mtime: '2026-05-29T20:19:30Z'
+  mtime: '2026-07-01T21:24:40Z'
   rows: 4405
   sheet: null
   schema:
@@ -205,10 +205,10 @@ resources:
     - apl_metag_same_patient
     - apl_metars_same_patient
     - multi_sample_flag
-- path: 5_21_26/protect_conrad_micro_data_clean_5_21_26.csv
+- path: 6_24_26/protect_conrad_micro_data_clean_6_24_26.csv
   format: csv
   size_bytes: 9729
-  mtime: '2026-05-29T20:19:31Z'
+  mtime: '2026-07-01T21:24:41Z'
   rows: 131
   sheet: null
   schema:
@@ -259,10 +259,10 @@ resources:
       type: string
     candidate_keys:
     - patient_id
-- path: 5_21_26/protect_conrad_sample_data_clean_5_21_26.csv
+- path: 6_24_26/protect_conrad_sample_data_clean_6_24_26.csv
   format: csv
-  size_bytes: 7592
-  mtime: '2026-05-29T20:19:31Z'
+  size_bytes: 7586
+  mtime: '2026-07-01T21:24:41Z'
   rows: 269
   sheet: null
   schema:
@@ -285,10 +285,10 @@ resources:
     - patient_status_collection_conrad
     - day_of_sample_collection_conrad
     - sample_type_conrad
-- path: 5_21_26/protect_multiomics_isolate_sample_patient_conrad_integration_5_21_26.csv
+- path: 6_24_26/protect_multiomics_isolate_sample_patient_conrad_integration_6_24_26.csv
   format: csv
-  size_bytes: 132607
-  mtime: '2026-05-29T20:19:31Z'
+  size_bytes: 132601
+  mtime: '2026-07-01T21:24:42Z'
   rows: 241
   sheet: null
   schema:
@@ -425,10 +425,10 @@ resources:
     - patient_status_collection_conrad
     - day_of_sample_collection_conrad
     - sample_type_conrad
-- path: 5_21_26/protect_multiomics_isolate_sample_patient_integration_5_21_26.csv
+- path: 6_24_26/protect_multiomics_isolate_sample_patient_integration_6_24_26.csv
   format: csv
   size_bytes: 128037
-  mtime: '2026-05-29T20:19:31Z'
+  mtime: '2026-07-01T21:24:41Z'
   rows: 241
   sheet: null
   schema:
@@ -554,10 +554,10 @@ resources:
     - has_isolates
     - asma_id_count
     - asma_id_list
-- path: 5_21_26/protect_redcap_clinical_clean_5_21_26.csv
+- path: 6_24_26/protect_redcap_clinical_clean_6_24_26.csv
   format: csv
   size_bytes: 98179
-  mtime: '2026-05-29T20:19:27Z'
+  mtime: '2026-07-01T21:24:35Z'
   rows: 269
   sheet: null
   schema:
@@ -734,10 +734,10 @@ resources:
     - original_sampleid_group
     - sampleid_suffix
     - pro_sample_id
-latest_resource: 5_21_26/protect_conrad_micro_data_clean_5_21_26.csv
+latest_resource: 6_24_26/protect_multiomics_isolate_sample_patient_conrad_integration_6_24_26.csv
 size:
-  total_bytes: 10048224
-  file_count: 34
+  total_bytes: 12993403
+  file_count: 43
   truncated: false
 subdirectories:
 - name: '3_25_26'
@@ -785,9 +785,18 @@ subdirectories:
     .csv: 3
     .md: 2
     .txt: 1
-latest_subdir: '5_21_26'
+- name: '6_24_26'
+  mtime: '2026-07-01T21:24:42Z'
+  immediate_files: 9
+  immediate_subdirs: 0
+  immediate_bytes: 2945179
+  file_types:
+    .csv: 6
+    .md: 2
+    .txt: 1
+latest_subdir: '6_24_26'
 freshness:
-  last_crawled: '2026-06-23T09:00:02Z'
-  source_mtime_latest: '2026-05-29T20:19:31Z'
+  last_crawled: '2026-07-22T09:00:04Z'
+  source_mtime_latest: '2026-07-01T21:24:42Z'
   cadence_observed: null
 owner_manifest: null

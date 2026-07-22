@@ -2,8 +2,8 @@
 # Human-owned card. The crawler NEVER edits this file.
 collection_id: asma_genomics
 maintainer: Spencer Long (Arkin Lab) — DRAFT, pending review by Alex Styer
-last_reviewed: 2026-06-15
-summary: Genomic characterization of the ~4,900 ASMA bacterial isolates (mostly P. aeruginosa) — assemblies, taxonomy, AMR gene predictions, virulence factors, metabolic-pathway predictions, and QC. The genomic half of the ASMA collection. Join to the rest of PROTECT via ASMA_id.
+last_reviewed: 2026-07-22
+summary: Genomic characterization of the ASMA bacterial isolates that have a genome assembly (~4,900 of the 5,019-isolate collection; mostly P. aeruginosa) — assemblies, taxonomy, AMR gene predictions, virulence factors, metabolic-pathway predictions, and QC. The genomic half of the ASMA collection. Join to the rest of PROTECT via ASMA_id.
 keywords: [genome, genomics, assembly, annotation, AMR, amrfinder, antibiotic resistance genes, resistance gene predictions, virulence, metaVF, virulence factors, gapmind, metabolic pathways, GTDB, taxonomy, gtdbtk, checkm2, busco, genome QC, Pseudomonas aeruginosa, PA, isolate genomes, strain clusters, ANI, fastani, mash, prophage, phage]
 related: [patient_sample_isolate_linkage, asma_phenotyping, zengler_metagenomics_mind]
 ---
@@ -16,12 +16,24 @@ related: [patient_sample_isolate_linkage, asma_phenotyping, zengler_metagenomics
 > This card is the catalog-level summary; defer to Alex's manifest for assembly/annotation internals.
 
 ## What this is
-Genomic characterization of the **ASMA isolate collection** — ~4,900 bacterial isolates (primarily
-*Pseudomonas aeruginosa*) cultured from CF and non-CF bronchiectasis patient sputum. Each isolate has
-short-read assembly + annotation; a subset also have Nanopore long reads / hybrid assemblies (those
-isolates appear in `nanoplot-summary.tsv` — see the descriptor for the current set). This is the
-**genomic half of the ASMA collection** (the phenotype half is
-`asma_phenotyping`).
+Genomic characterization of the **ASMA isolate collection** (primarily *Pseudomonas aeruginosa*,
+cultured from CF and non-CF bronchiectasis patient sputum). Each isolate has short-read assembly +
+annotation; a subset also have Nanopore long reads / hybrid assemblies (those isolates appear in
+`nanoplot-summary.tsv` — see the descriptor for the current set). This is the **genomic half of the
+ASMA collection** (the phenotype half is `asma_phenotyping`).
+
+**Coverage / counts — read this before comparing isolate totals** (a common point of confusion). Three
+different numbers are all correct, at three different levels:
+- **5,019** — the *full* ASMA isolate collection (the gold linkage table, `ASMA-1 … ASMA-5019`). This
+  is the ">4,900 total" figure.
+- **~4,900** — isolates that have a **genome assembly**, i.e. what *this* collection actually covers
+  (`amrfinder` / `checkm2` / `busco` / `metaVF` each carry ~4,900–4,930 distinct `ASMA_id`; see
+  `dataset.yaml` for live counts). The ~100 isolates without genome data are QC failures or
+  not-yet-assembled, so **the genomic tables here will NOT contain every `ASMA_id`** — don't expect
+  all 5,019.
+- **~4,300** — a further-filtered *genome-typed + strain-clustered* subset (e.g. what feeds downstream
+  decision sheets). This is a subset *of this collection*, not the whole — so a number near 4,300 is
+  the clustered subset, not "missing isolates."
 
 ## Why it exists / provenance
 Produced by Alex Styer's Snakemake pipelines (assembly: fastp → SPAdes → BUSCO/CheckM2; annotation:

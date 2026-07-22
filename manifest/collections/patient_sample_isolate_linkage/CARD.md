@@ -58,7 +58,7 @@ This is the point of the table. Three keys reach the rest of PROTECT:
 | `ASMA_id` | Isolate identifier assigned at bacterial culturing. **Blank for omics-only rows** (no isolate). |
 | `patient_id` | Integer patient identifier (the cross-cohort patient key). |
 | `sample_id` | Sample identifier; the omics/sample key. Patient samples use `PRO<n>` (e.g. `PRO101`); healthy-donor samples use `HD<n>_<site>` (e.g. `HD1_tongue`, `HD1_throat`). |
-| `patient_type` | Patient population — actual values are `adult`, `pediatric`, `healthy_donor` (an age-band / donor-status axis; **not** a CF vs non-CF disease label — disease status lives in the clinical data). *Not* a join key. |
+| `patient_type` | Patient population — actual values are `adult`, `pediatric`, `healthy_donor` (an age-band / donor-status axis; **not** a CF vs non-CF disease label). For CF vs non-CF, use the clinical `patient_status` codes + `cftr_modulator_status` in `integration_pipeline_outputs` (there is no single CF column; codes to verify with Conrad). *Not* a join key. |
 | `sampling_method` | Sample material / collection method — actual values: `sputum`, `oral_rinse`, `oral_swab`. |
 | `sampling_site` | Anatomical / collection site — actual values: `lower_respiratory_tract`, `oral_cavity`, `tongue`, `throat`. |
 | `isolation_media` | Culture media used. **Blank for omics-only rows.** |

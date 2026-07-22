@@ -13,8 +13,9 @@ tags:
 - MIND
 - METAGENOMICS
 - METATRANSCRIPTOMICS
+- FORMULATION
 notes:
-- resource list truncated to 60 of 222 data files
+- resource list truncated to 60 of 225 data files
 access:
   status: open
   readable_by:
@@ -15616,6 +15617,12 @@ subdirectories:
   immediate_bytes: 1206
   file_types:
     .log: 1
+- name: PRO_metaRS_actuallast
+  mtime: '2026-07-02T17:38:49Z'
+  immediate_files: 0
+  immediate_subdirs: 1
+  immediate_bytes: 0
+  file_types: {}
 - name: WoL_Subset50_analysis
   mtime: '2026-04-26T23:09:54Z'
   immediate_files: 0
@@ -15719,12 +15726,12 @@ subdirectories:
     .xz: 5
     .md: 3
 - name: final_dataset_clean
-  mtime: '2026-06-22T19:58:25Z'
-  immediate_files: 11
-  immediate_subdirs: 4
-  immediate_bytes: 1249097207
+  mtime: '2026-07-21T16:50:47Z'
+  immediate_files: 14
+  immediate_subdirs: 6
+  immediate_bytes: 1251919752
   file_types:
-    .tsv: 10
+    .tsv: 13
     .md: 1
 - name: misc
   mtime: '2026-05-18T20:02:43Z'
@@ -15747,7 +15754,7 @@ subdirectories:
   file_types: {}
 latest_subdir: final_dataset_clean
 freshness:
-  last_crawled: '2026-06-23T09:01:08Z'
-  source_mtime_latest: '2026-06-19T21:57:52Z'
+  last_crawled: '2026-07-22T09:07:37Z'
+  source_mtime_latest: '2026-07-02T17:38:49Z'
   cadence_observed: null
 owner_manifest: null
