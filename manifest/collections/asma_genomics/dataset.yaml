@@ -15,7 +15,7 @@ tags:
 - TAXONOMY
 - ISOLATE
 notes:
-- resource list truncated to 60 of 132 data files
+- resource list truncated to 60 of 157 data files
 access:
   status: open
   readable_by:
@@ -302,6 +302,74 @@ resources:
       type: string
     candidate_keys:
     - ASMA_id
+- path: asma-summary/data/data-availability-matrix.tsv
+  format: tsv
+  size_bytes: 977378
+  mtime: '2026-07-27T18:05:29Z'
+  rows: 4921
+  sheet: null
+  schema:
+    fields:
+    - name: ASMA_id
+      type: string
+    - name: genus
+      type: string
+    - name: species
+      type: string
+    - name: strain_group
+      type: string
+    - name: representative
+      type: string
+    - name: assembly_type
+      type: string
+    - name: assembler
+      type: string
+    - name: completeness_checkm2
+      type: number
+    - name: contamination_checkm2
+      type: number
+    - name: contig_n50_kb
+      type: number
+    - name: genome_size_mb
+      type: number
+    - name: quality_class
+      type: string
+    - name: abx_v2
+      type: boolean
+    - name: abx_v1
+      type: boolean
+    - name: growth_endpoint
+      type: boolean
+    - name: carbon_endpoint_v1_DEPRECATED
+      type: boolean
+    - name: growthcurve_scfm384_DEPRECATED
+      type: boolean
+    - name: growthcurve_single384
+      type: boolean
+    - name: growthcurve_dropoff384
+      type: boolean
+    - name: growthcurve_single96
+      type: boolean
+    - name: comp_any
+      type: boolean
+    - name: comp_PAO1
+      type: boolean
+    - name: comp_PA14
+      type: boolean
+    - name: comp_clinical_PA
+      type: boolean
+    - name: comp_AB
+      type: boolean
+    - name: comp_KP
+      type: boolean
+    - name: comp_SA
+      type: boolean
+    - name: hemolysis
+      type: boolean
+    - name: any_invitro_current
+      type: boolean
+    candidate_keys:
+    - ASMA_id
 - path: busco-summary.tsv
   format: tsv
   size_bytes: 210380
@@ -519,6 +587,1086 @@ resources:
       type: string
     candidate_keys:
     - sample_id
+- path: formulation-picker/data/data-holes.tsv
+  format: tsv
+  size_bytes: 99006
+  mtime: '2026-08-03T20:31:15Z'
+  rows: 780
+  sheet: null
+  schema:
+    fields:
+    - name: strain_group
+      type: integer
+    - name: genus
+      type: string
+    - name: species
+      type: string
+    - name: n_isolates
+      type: integer
+    - name: representative_asma_id
+      type: string
+    - name: candidate
+      type: boolean
+    - name: excluded_because
+      type: unknown
+    - name: growth_endpoint
+      type: string
+    - name: isolates_with_growth_endpoint
+      type: integer
+    - name: abx_panel
+      type: string
+    - name: isolates_with_abx_panel
+      type: integer
+    - name: hemolysis
+      type: string
+    - name: isolates_with_hemolysis
+      type: integer
+    - name: pa14_competition
+      type: string
+    - name: isolates_with_pa14_competition
+      type: integer
+    - name: n_assays_missing
+      type: integer
+    - name: assays_missing
+      type: string
+    candidate_keys:
+    - n_isolates
+    - representative_asma_id
+    - isolates_with_growth_endpoint
+    - isolates_with_abx_panel
+    - isolates_with_hemolysis
+    - isolates_with_pa14_competition
+- path: formulation-picker/data/filtered-candidates.tsv
+  format: tsv
+  size_bytes: 169500
+  mtime: '2026-07-31T16:39:04Z'
+  rows: 237
+  sheet: null
+  schema:
+    fields:
+    - name: strain_group
+      type: integer
+    - name: n_isolates
+      type: integer
+    - name: representative_asma_id
+      type: string
+    - name: genus
+      type: string
+    - name: species
+      type: string
+    - name: n_species_in_group
+      type: integer
+    - name: n_isolates_hq
+      type: integer
+    - name: n_isolates_growth
+      type: integer
+    - name: has_growth_endpoint
+      type: boolean
+    - name: n_isolates_abx
+      type: integer
+    - name: has_abx_v2
+      type: boolean
+    - name: n_isolates_hemolysis
+      type: integer
+    - name: has_hemolysis
+      type: boolean
+    - name: hemolysis_beta_discordant
+      type: boolean
+    - name: hemolysis_alpha_discordant
+      type: boolean
+    - name: n_isolates_competition
+      type: integer
+    - name: has_competition_any
+      type: boolean
+    - name: n_isolates_comp_r1
+      type: integer
+    - name: n_isolates_comp_r100
+      type: integer
+    - name: n_isolates_comp_r1000
+      type: integer
+    - name: has_competition_1v1
+      type: boolean
+    - name: n_isolates_gapmind
+      type: integer
+    - name: has_gapmind_carbon
+      type: boolean
+    - name: nif_pa14_mean
+      type: number
+    - name: nif_pa14_max
+      type: number
+    - name: nif_pa14_min
+      type: number
+    - name: n_scfm_carbons_used_mean
+      type: number
+    - name: n_scfm_carbons_used_max
+      type: integer
+    - name: n_scfm_carbons_used_min
+      type: integer
+    - name: scfm_72_mean
+      type: number
+    - name: scfm_72_max
+      type: number
+    - name: scfm_72_min
+      type: number
+    - name: scfm_mucin_72_mean
+      type: number
+    - name: scfm_mucin_72_max
+      type: number
+    - name: scfm_mucin_72_min
+      type: number
+    - name: mucin_lift_od_mean
+      type: number
+    - name: mucin_lift_od_max
+      type: number
+    - name: mucin_lift_od_min
+      type: number
+    - name: qc_bhis_24_max
+      type: number
+    - name: qc_scfm_16_max
+      type: number
+    - name: qc_no_carbon_72_max
+      type: number
+    - name: qc_bhis_72_max
+      type: number
+    - name: abx_ampicillin_pct_median
+      type: number
+    - name: abx_ampicillin_pct_max
+      type: number
+    - name: abx_ciprofloxacin_pct_median
+      type: number
+    - name: abx_ciprofloxacin_pct_max
+      type: number
+    - name: abx_chloramphenicol_pct_median
+      type: number
+    - name: abx_chloramphenicol_pct_max
+      type: number
+    - name: abx_tetracycline_pct_median
+      type: number
+    - name: abx_tetracycline_pct_max
+      type: number
+    - name: abx_gentamicin_pct_median
+      type: number
+    - name: abx_gentamicin_pct_max
+      type: number
+    - name: abx_erythromycin_pct_median
+      type: number
+    - name: abx_erythromycin_pct_max
+      type: number
+    - name: abx_n_resistant_median
+      type: number
+    - name: abx_n_resistant_max
+      type: integer
+    - name: hemolysis_beta_any
+      type: boolean
+    - name: hemolysis_beta_frac
+      type: integer
+    - name: hemolysis_alpha_any
+      type: boolean
+    - name: hemolysis_alpha_frac
+      type: number
+    - name: comp_pa14_r1_inhib_pct_median
+      type: number
+    - name: comp_pa14_r1_inhib_pct_max
+      type: number
+    - name: comp_pa14_r1_inhib_pct_min
+      type: number
+    - name: comp_pa14_r100_inhib_pct_median
+      type: number
+    - name: comp_pa14_r100_inhib_pct_max
+      type: number
+    - name: comp_pa14_r100_inhib_pct_min
+      type: number
+    - name: comp_pa14_r1000_inhib_pct_median
+      type: number
+    - name: comp_pa14_r1000_inhib_pct_max
+      type: number
+    - name: comp_pa14_r1000_inhib_pct_min
+      type: number
+    - name: comp_pa14_inhib_pct_median
+      type: number
+    - name: comp_pa14_inhib_pct_max
+      type: number
+    - name: comp_pa14_inhib_pct_min
+      type: number
+    - name: cluster95_source_genome
+      type: string
+    - name: cluster95_id
+      type: integer
+    - name: cluster95_label
+      type: string
+    - name: cluster95_genus
+      type: string
+    - name: cluster95_species
+      type: string
+    - name: n_strain_groups_in_cluster
+      type: integer
+    - name: ubiq_metaG_all_gt0
+      type: number
+    - name: ubiq_metaG_all_gt1
+      type: number
+    - name: ubiq_metaG_all_gt10
+      type: number
+    - name: ubiq_metaG_all_gt100
+      type: number
+    - name: abund_metaG_all_mean_cpm
+      type: number
+    - name: abund_metaG_all_median_cpm
+      type: number
+    - name: abund_metaG_all_mean_detected_cpm
+      type: number
+    - name: ubiq_metaG_papos_gt0
+      type: number
+    - name: ubiq_metaG_papos_gt1
+      type: number
+    - name: ubiq_metaG_papos_gt10
+      type: number
+    - name: ubiq_metaG_papos_gt100
+      type: number
+    - name: abund_metaG_papos_mean_cpm
+      type: number
+    - name: abund_metaG_papos_median_cpm
+      type: number
+    - name: abund_metaG_papos_mean_detected_cpm
+      type: number
+    - name: ubiq_metaG_paneg_gt0
+      type: number
+    - name: ubiq_metaG_paneg_gt1
+      type: number
+    - name: ubiq_metaG_paneg_gt10
+      type: number
+    - name: ubiq_metaG_paneg_gt100
+      type: number
+    - name: abund_metaG_paneg_mean_cpm
+      type: number
+    - name: abund_metaG_paneg_median_cpm
+      type: number
+    - name: abund_metaG_paneg_mean_detected_cpm
+      type: number
+    - name: ubiq_metaRS_all_gt0
+      type: number
+    - name: ubiq_metaRS_all_gt1
+      type: number
+    - name: ubiq_metaRS_all_gt10
+      type: number
+    - name: ubiq_metaRS_all_gt100
+      type: number
+    - name: abund_metaRS_all_mean_cpm
+      type: number
+    - name: abund_metaRS_all_median_cpm
+      type: number
+    - name: abund_metaRS_all_mean_detected_cpm
+      type: number
+    - name: ubiq_metaRS_papos_gt0
+      type: number
+    - name: ubiq_metaRS_papos_gt1
+      type: number
+    - name: ubiq_metaRS_papos_gt10
+      type: number
+    - name: ubiq_metaRS_papos_gt100
+      type: number
+    - name: abund_metaRS_papos_mean_cpm
+      type: number
+    - name: abund_metaRS_papos_median_cpm
+      type: number
+    - name: abund_metaRS_papos_mean_detected_cpm
+      type: number
+    - name: ubiq_metaRS_paneg_gt0
+      type: number
+    - name: ubiq_metaRS_paneg_gt1
+      type: number
+    - name: ubiq_metaRS_paneg_gt10
+      type: number
+    - name: ubiq_metaRS_paneg_gt100
+      type: number
+    - name: abund_metaRS_paneg_mean_cpm
+      type: number
+    - name: abund_metaRS_paneg_median_cpm
+      type: number
+    - name: abund_metaRS_paneg_mean_detected_cpm
+      type: number
+    - name: cluster95_detected
+      type: boolean
+    - name: has_ubiquity
+      type: boolean
+    - name: any_phenotype
+      type: boolean
+    - name: member_asma_ids
+      type: string
+    - name: eskape
+      type: unknown
+    candidate_keys:
+    - n_isolates
+    - representative_asma_id
+    - n_isolates_hq
+    - n_isolates_growth
+    - n_isolates_abx
+    - n_isolates_hemolysis
+    - n_isolates_competition
+    - n_isolates_comp_r1
+    - n_isolates_comp_r100
+    - n_isolates_comp_r1000
+    - n_isolates_gapmind
+    - cluster95_id
+    - member_asma_ids
+- path: formulation-picker/data/isolate-table.tsv
+  format: tsv
+  size_bytes: 2749485
+  mtime: '2026-08-03T20:31:10Z'
+  rows: 4921
+  sheet: null
+  schema:
+    fields:
+    - name: asma_id
+      type: string
+    - name: genus
+      type: string
+    - name: species
+      type: string
+    - name: strain_group
+      type: string
+    - name: is_representative
+      type: boolean
+    - name: assembly_type
+      type: string
+    - name: assembler
+      type: string
+    - name: completeness_checkm2
+      type: number
+    - name: contamination_checkm2
+      type: number
+    - name: genome_size_mb
+      type: number
+    - name: contig_n50_kb
+      type: number
+    - name: genome_quality_class
+      type: string
+    - name: scfm_72
+      type: number
+    - name: scfm_72_sd
+      type: number
+    - name: scfm_72_min
+      type: number
+    - name: scfm_72_max
+      type: number
+    - name: scfm_mucin_72
+      type: number
+    - name: scfm_mucin_72_sd
+      type: number
+    - name: scfm_mucin_72_min
+      type: number
+    - name: scfm_mucin_72_max
+      type: number
+    - name: mucin_lift_od
+      type: number
+    - name: qc_bhis_24
+      type: number
+    - name: qc_scfm_16
+      type: number
+    - name: qc_no_carbon_72
+      type: number
+    - name: qc_bhis_72
+      type: number
+    - name: growth_n_replicates
+      type: integer
+    - name: growth_n_dates
+      type: integer
+    - name: growth_blank_date_fallback
+      type: boolean
+    - name: has_growth_endpoint
+      type: boolean
+    - name: abx_ampicillin_pct
+      type: number
+    - name: abx_ciprofloxacin_pct
+      type: number
+    - name: abx_chloramphenicol_pct
+      type: number
+    - name: abx_tetracycline_pct
+      type: number
+    - name: abx_gentamicin_pct
+      type: number
+    - name: abx_erythromycin_pct
+      type: number
+    - name: abx_n_resistant
+      type: integer
+    - name: abx_n_drugs_scored
+      type: integer
+    - name: abx_ampicillin_pct_max
+      type: number
+    - name: abx_ciprofloxacin_pct_max
+      type: number
+    - name: abx_chloramphenicol_pct_max
+      type: number
+    - name: abx_tetracycline_pct_max
+      type: number
+    - name: abx_gentamicin_pct_max
+      type: number
+    - name: abx_erythromycin_pct_max
+      type: number
+    - name: abx_untreated_delta_od600
+      type: number
+    - name: abx_n_replicates_qc_pass
+      type: integer
+    - name: abx_n_replicates_total
+      type: integer
+    - name: abx_n_dates
+      type: integer
+    - name: has_abx_v2
+      type: boolean
+    - name: hemolysis_beta
+      type: boolean
+    - name: hemolysis_alpha
+      type: boolean
+    - name: hemolysis_beta_first_h
+      type: integer
+    - name: hemolysis_alpha_first_h
+      type: integer
+    - name: hemolysis_beta_discordant
+      type: boolean
+    - name: hemolysis_alpha_discordant
+      type: boolean
+    - name: hemolysis_n_replicates
+      type: integer
+    - name: hemolysis_n_replicates_grew
+      type: integer
+    - name: hemolysis_follow_up
+      type: boolean
+    - name: has_hemolysis
+      type: boolean
+    - name: comp_pa14_r1_inhib_pct
+      type: number
+    - name: comp_pa14_r1_sd
+      type: number
+    - name: comp_pa14_r1_n_wells
+      type: integer
+    - name: comp_pa14_r1_n_dates
+      type: integer
+    - name: comp_pa14_r100_inhib_pct
+      type: number
+    - name: comp_pa14_r100_sd
+      type: number
+    - name: comp_pa14_r100_n_wells
+      type: integer
+    - name: comp_pa14_r100_n_dates
+      type: integer
+    - name: comp_pa14_r1000_inhib_pct
+      type: unknown
+    - name: comp_pa14_r1000_sd
+      type: unknown
+    - name: comp_pa14_r1000_n_wells
+      type: unknown
+    - name: comp_pa14_r1000_n_dates
+      type: unknown
+    - name: comp_pa14_inhib_pct
+      type: number
+    - name: comp_primary_ratio
+      type: integer
+    - name: comp_primary_reporter
+      type: string
+    - name: comp_n_ratios_tested
+      type: integer
+    - name: comp_n_reporters_tested
+      type: integer
+    - name: comp_reporters_tested
+      type: string
+    - name: comp_n_wells_total
+      type: integer
+    - name: has_competition_1v1
+      type: boolean
+    - name: has_competition_any
+      type: boolean
+    - name: nif_pa14
+      type: number
+    - name: nif_jaccard_pa14
+      type: number
+    - name: nif_contested_W
+      type: number
+    - name: nif_offtarget_W
+      type: integer
+    - name: n_scfm_carbons_used
+      type: integer
+    - name: has_gapmind_carbon
+      type: boolean
+    - name: cluster95_id
+      type: integer
+    - name: cluster95_label
+      type: string
+    - name: cluster95_genus
+      type: string
+    - name: cluster95_species
+      type: string
+    - name: n_strain_groups_in_cluster
+      type: integer
+    - name: ubiq_metaG_all_gt0
+      type: number
+    - name: ubiq_metaG_all_gt1
+      type: number
+    - name: ubiq_metaG_all_gt10
+      type: number
+    - name: ubiq_metaG_all_gt100
+      type: number
+    - name: abund_metaG_all_mean_cpm
+      type: number
+    - name: abund_metaG_all_median_cpm
+      type: number
+    - name: abund_metaG_all_mean_detected_cpm
+      type: number
+    - name: ubiq_metaG_papos_gt0
+      type: number
+    - name: ubiq_metaG_papos_gt1
+      type: number
+    - name: ubiq_metaG_papos_gt10
+      type: number
+    - name: ubiq_metaG_papos_gt100
+      type: number
+    - name: abund_metaG_papos_mean_cpm
+      type: number
+    - name: abund_metaG_papos_median_cpm
+      type: number
+    - name: abund_metaG_papos_mean_detected_cpm
+      type: number
+    - name: ubiq_metaG_paneg_gt0
+      type: number
+    - name: ubiq_metaG_paneg_gt1
+      type: number
+    - name: ubiq_metaG_paneg_gt10
+      type: number
+    - name: ubiq_metaG_paneg_gt100
+      type: number
+    - name: abund_metaG_paneg_mean_cpm
+      type: number
+    - name: abund_metaG_paneg_median_cpm
+      type: number
+    - name: abund_metaG_paneg_mean_detected_cpm
+      type: number
+    - name: ubiq_metaRS_all_gt0
+      type: number
+    - name: ubiq_metaRS_all_gt1
+      type: number
+    - name: ubiq_metaRS_all_gt10
+      type: number
+    - name: ubiq_metaRS_all_gt100
+      type: number
+    - name: abund_metaRS_all_mean_cpm
+      type: number
+    - name: abund_metaRS_all_median_cpm
+      type: number
+    - name: abund_metaRS_all_mean_detected_cpm
+      type: number
+    - name: ubiq_metaRS_papos_gt0
+      type: number
+    - name: ubiq_metaRS_papos_gt1
+      type: number
+    - name: ubiq_metaRS_papos_gt10
+      type: number
+    - name: ubiq_metaRS_papos_gt100
+      type: number
+    - name: abund_metaRS_papos_mean_cpm
+      type: number
+    - name: abund_metaRS_papos_median_cpm
+      type: number
+    - name: abund_metaRS_papos_mean_detected_cpm
+      type: number
+    - name: ubiq_metaRS_paneg_gt0
+      type: number
+    - name: ubiq_metaRS_paneg_gt1
+      type: number
+    - name: ubiq_metaRS_paneg_gt10
+      type: number
+    - name: ubiq_metaRS_paneg_gt100
+      type: number
+    - name: abund_metaRS_paneg_mean_cpm
+      type: number
+    - name: abund_metaRS_paneg_median_cpm
+      type: number
+    - name: abund_metaRS_paneg_mean_detected_cpm
+      type: number
+    - name: cluster95_detected
+      type: boolean
+    - name: has_ubiquity
+      type: boolean
+    - name: any_phenotype
+      type: boolean
+    candidate_keys:
+    - asma_id
+    - cluster95_id
+- path: formulation-picker/data/score-inputs-by-isolate.tsv
+  format: tsv
+  size_bytes: 8391
+  mtime: '2026-08-04T19:17:00Z'
+  rows: 50
+  sheet: null
+  schema:
+    fields:
+    - name: asma_id
+      type: string
+    - name: nif_pa14
+      type: number
+    - name: scfm_mucin_72
+      type: number
+    - name: comp_pa14_r100_inhib_pct
+      type: number
+    - name: ubiq_metaG_all_gt10
+      type: number
+    - name: abund_metaRS_all_mean_cpm
+      type: number
+    - name: default_isolate_score
+      type: number
+    - name: strain_group
+      type: integer
+    - name: genus
+      type: string
+    - name: species
+      type: string
+    - name: cluster95_label
+      type: string
+    - name: n_strain_groups_in_cluster
+      type: integer
+    - name: genome_quality_class
+      type: string
+    - name: is_representative
+      type: boolean
+    - name: comp_pa14_r100_n_wells
+      type: integer
+    - name: comp_pa14_r1_inhib_pct
+      type: number
+    - name: comp_pa14_r1000_inhib_pct
+      type: number
+    - name: n_scfm_carbons_used
+      type: integer
+    - name: scfm_72
+      type: number
+    - name: mucin_lift_od
+      type: number
+    - name: hemolysis_alpha
+      type: boolean
+    - name: abx_n_resistant
+      type: integer
+    candidate_keys:
+    - asma_id
+    - default_isolate_score
+- path: formulation-picker/data/score-inputs.tsv
+  format: tsv
+  size_bytes: 9506
+  mtime: '2026-08-04T19:17:00Z'
+  rows: 48
+  sheet: null
+  schema:
+    fields:
+    - name: strain_group
+      type: integer
+    - name: representative_asma_id
+      type: string
+    - name: n_isolates_scored
+      type: integer
+    - name: genus
+      type: string
+    - name: species
+      type: string
+    - name: cluster95_label
+      type: string
+    - name: n_strain_groups_in_cluster
+      type: integer
+    - name: member_asma_ids
+      type: string
+    - name: default_isolate_score_rep
+      type: number
+    - name: default_isolate_score_spread
+      type: number
+    - name: nif_pa14
+      type: number
+    - name: nif_pa14_n
+      type: integer
+    - name: nif_pa14_sd
+      type: integer
+    - name: scfm_mucin_72
+      type: number
+    - name: scfm_mucin_72_n
+      type: integer
+    - name: scfm_mucin_72_sd
+      type: number
+    - name: comp_pa14_r100_inhib_pct
+      type: number
+    - name: comp_pa14_r100_inhib_pct_n
+      type: integer
+    - name: comp_pa14_r100_inhib_pct_sd
+      type: number
+    - name: ubiq_metaG_all_gt10
+      type: number
+    - name: ubiq_metaG_all_gt10_n
+      type: integer
+    - name: ubiq_metaG_all_gt10_sd
+      type: integer
+    - name: abund_metaRS_all_mean_cpm
+      type: number
+    - name: abund_metaRS_all_mean_cpm_n
+      type: integer
+    - name: abund_metaRS_all_mean_cpm_sd
+      type: integer
+    - name: comp_pa14_r100_n_wells
+      type: number
+    - name: comp_pa14_r1_inhib_pct
+      type: number
+    - name: comp_pa14_r1000_inhib_pct
+      type: number
+    - name: n_scfm_carbons_used
+      type: integer
+    - name: scfm_72
+      type: number
+    - name: mucin_lift_od
+      type: number
+    - name: abx_n_resistant
+      type: integer
+    - name: genome_quality_class
+      type: string
+    candidate_keys:
+    - representative_asma_id
+    - n_isolates_scored
+    - member_asma_ids
+    - default_isolate_score_rep
+    - default_isolate_score_spread
+- path: formulation-picker/data/strain-group-table.tsv
+  format: tsv
+  size_bytes: 580405
+  mtime: '2026-08-03T20:31:14Z'
+  rows: 780
+  sheet: null
+  schema:
+    fields:
+    - name: strain_group
+      type: integer
+    - name: n_isolates
+      type: integer
+    - name: representative_asma_id
+      type: string
+    - name: genus
+      type: string
+    - name: species
+      type: string
+    - name: n_species_in_group
+      type: integer
+    - name: n_isolates_hq
+      type: integer
+    - name: n_isolates_growth
+      type: integer
+    - name: has_growth_endpoint
+      type: boolean
+    - name: n_isolates_abx
+      type: integer
+    - name: has_abx_v2
+      type: boolean
+    - name: n_isolates_hemolysis
+      type: integer
+    - name: has_hemolysis
+      type: boolean
+    - name: hemolysis_beta_discordant
+      type: boolean
+    - name: hemolysis_alpha_discordant
+      type: boolean
+    - name: n_isolates_competition
+      type: integer
+    - name: has_competition_any
+      type: boolean
+    - name: n_isolates_comp_r1
+      type: integer
+    - name: n_isolates_comp_r100
+      type: integer
+    - name: n_isolates_comp_r1000
+      type: integer
+    - name: has_competition_1v1
+      type: boolean
+    - name: n_isolates_gapmind
+      type: integer
+    - name: has_gapmind_carbon
+      type: boolean
+    - name: nif_pa14_mean
+      type: number
+    - name: nif_pa14_max
+      type: number
+    - name: nif_pa14_min
+      type: number
+    - name: n_scfm_carbons_used_mean
+      type: integer
+    - name: n_scfm_carbons_used_max
+      type: integer
+    - name: n_scfm_carbons_used_min
+      type: integer
+    - name: scfm_72_mean
+      type: number
+    - name: scfm_72_max
+      type: number
+    - name: scfm_72_min
+      type: number
+    - name: scfm_mucin_72_mean
+      type: number
+    - name: scfm_mucin_72_max
+      type: number
+    - name: scfm_mucin_72_min
+      type: number
+    - name: mucin_lift_od_mean
+      type: number
+    - name: mucin_lift_od_max
+      type: number
+    - name: mucin_lift_od_min
+      type: number
+    - name: qc_bhis_24_max
+      type: number
+    - name: qc_scfm_16_max
+      type: number
+    - name: qc_no_carbon_72_max
+      type: number
+    - name: qc_bhis_72_max
+      type: number
+    - name: abx_ampicillin_pct_median
+      type: number
+    - name: abx_ampicillin_pct_max
+      type: number
+    - name: abx_ciprofloxacin_pct_median
+      type: number
+    - name: abx_ciprofloxacin_pct_max
+      type: number
+    - name: abx_chloramphenicol_pct_median
+      type: number
+    - name: abx_chloramphenicol_pct_max
+      type: number
+    - name: abx_tetracycline_pct_median
+      type: number
+    - name: abx_tetracycline_pct_max
+      type: number
+    - name: abx_gentamicin_pct_median
+      type: number
+    - name: abx_gentamicin_pct_max
+      type: number
+    - name: abx_erythromycin_pct_median
+      type: number
+    - name: abx_erythromycin_pct_max
+      type: number
+    - name: abx_n_resistant_median
+      type: integer
+    - name: abx_n_resistant_max
+      type: integer
+    - name: hemolysis_beta_any
+      type: boolean
+    - name: hemolysis_beta_frac
+      type: integer
+    - name: hemolysis_alpha_any
+      type: boolean
+    - name: hemolysis_alpha_frac
+      type: integer
+    - name: comp_pa14_r1_inhib_pct_median
+      type: number
+    - name: comp_pa14_r1_inhib_pct_max
+      type: number
+    - name: comp_pa14_r1_inhib_pct_min
+      type: number
+    - name: comp_pa14_r100_inhib_pct_median
+      type: number
+    - name: comp_pa14_r100_inhib_pct_max
+      type: number
+    - name: comp_pa14_r100_inhib_pct_min
+      type: number
+    - name: comp_pa14_r1000_inhib_pct_median
+      type: number
+    - name: comp_pa14_r1000_inhib_pct_max
+      type: number
+    - name: comp_pa14_r1000_inhib_pct_min
+      type: number
+    - name: comp_pa14_inhib_pct_median
+      type: number
+    - name: comp_pa14_inhib_pct_max
+      type: number
+    - name: comp_pa14_inhib_pct_min
+      type: number
+    - name: cluster95_source_genome
+      type: string
+    - name: cluster95_id
+      type: integer
+    - name: cluster95_label
+      type: string
+    - name: cluster95_genus
+      type: string
+    - name: cluster95_species
+      type: string
+    - name: n_strain_groups_in_cluster
+      type: integer
+    - name: ubiq_metaG_all_gt0
+      type: number
+    - name: ubiq_metaG_all_gt1
+      type: number
+    - name: ubiq_metaG_all_gt10
+      type: number
+    - name: ubiq_metaG_all_gt100
+      type: number
+    - name: abund_metaG_all_mean_cpm
+      type: number
+    - name: abund_metaG_all_median_cpm
+      type: number
+    - name: abund_metaG_all_mean_detected_cpm
+      type: number
+    - name: ubiq_metaG_papos_gt0
+      type: number
+    - name: ubiq_metaG_papos_gt1
+      type: number
+    - name: ubiq_metaG_papos_gt10
+      type: number
+    - name: ubiq_metaG_papos_gt100
+      type: number
+    - name: abund_metaG_papos_mean_cpm
+      type: number
+    - name: abund_metaG_papos_median_cpm
+      type: number
+    - name: abund_metaG_papos_mean_detected_cpm
+      type: number
+    - name: ubiq_metaG_paneg_gt0
+      type: number
+    - name: ubiq_metaG_paneg_gt1
+      type: number
+    - name: ubiq_metaG_paneg_gt10
+      type: number
+    - name: ubiq_metaG_paneg_gt100
+      type: number
+    - name: abund_metaG_paneg_mean_cpm
+      type: number
+    - name: abund_metaG_paneg_median_cpm
+      type: number
+    - name: abund_metaG_paneg_mean_detected_cpm
+      type: number
+    - name: ubiq_metaRS_all_gt0
+      type: number
+    - name: ubiq_metaRS_all_gt1
+      type: number
+    - name: ubiq_metaRS_all_gt10
+      type: number
+    - name: ubiq_metaRS_all_gt100
+      type: number
+    - name: abund_metaRS_all_mean_cpm
+      type: number
+    - name: abund_metaRS_all_median_cpm
+      type: number
+    - name: abund_metaRS_all_mean_detected_cpm
+      type: number
+    - name: ubiq_metaRS_papos_gt0
+      type: number
+    - name: ubiq_metaRS_papos_gt1
+      type: number
+    - name: ubiq_metaRS_papos_gt10
+      type: number
+    - name: ubiq_metaRS_papos_gt100
+      type: number
+    - name: abund_metaRS_papos_mean_cpm
+      type: number
+    - name: abund_metaRS_papos_median_cpm
+      type: number
+    - name: abund_metaRS_papos_mean_detected_cpm
+      type: number
+    - name: ubiq_metaRS_paneg_gt0
+      type: number
+    - name: ubiq_metaRS_paneg_gt1
+      type: number
+    - name: ubiq_metaRS_paneg_gt10
+      type: number
+    - name: ubiq_metaRS_paneg_gt100
+      type: number
+    - name: abund_metaRS_paneg_mean_cpm
+      type: number
+    - name: abund_metaRS_paneg_median_cpm
+      type: number
+    - name: abund_metaRS_paneg_mean_detected_cpm
+      type: number
+    - name: cluster95_detected
+      type: boolean
+    - name: has_ubiquity
+      type: boolean
+    - name: any_phenotype
+      type: boolean
+    - name: member_asma_ids
+      type: string
+    candidate_keys:
+    - n_isolates
+    - representative_asma_id
+    - n_isolates_hq
+    - n_isolates_growth
+    - n_isolates_abx
+    - n_isolates_hemolysis
+    - n_isolates_competition
+    - n_isolates_comp_r1
+    - n_isolates_comp_r100
+    - n_isolates_comp_r1000
+    - n_isolates_gapmind
+    - cluster95_id
+    - member_asma_ids
+- path: formulation-picker/provenance/ledger.tsv
+  format: tsv
+  size_bytes: 2429
+  mtime: '2026-08-04T20:30:25Z'
+  rows: 3
+  sheet: null
+  schema:
+    fields:
+    - name: checkout_id
+      type: string
+    - name: checkout_utc
+      type: string
+    - name: operator
+      type: string
+    - name: item_index
+      type: integer
+    - name: item_type
+      type: string
+    - name: strain_group
+      type: integer
+    - name: representative_asma_id
+      type: string
+    - name: n_isolates_scored
+      type: integer
+    - name: member_asma_ids
+      type: string
+    - name: genus
+      type: string
+    - name: species
+      type: string
+    - name: rank
+      type: integer
+    - name: n_ranked
+      type: integer
+    - name: score
+      type: number
+    - name: destination
+      type: string
+    - name: destination_subcategories
+      type: unknown
+    - name: item_notes
+      type: string
+    - name: checkout_notes
+      type: string
+    - name: normalization
+      type: string
+    - name: weights_normalized
+      type: string
+    - name: ruleset_hash
+      type: string
+    - name: snapshot_hash
+      type: string
+    - name: added_under_current_settings
+      type: boolean
+    - name: requires_justification
+      type: boolean
+    - name: added_utc
+      type: string
+    - name: rank_at_checkout
+      type: integer
+    - name: checkout_ruleset_hash
+      type: string
+    - name: schema_version
+      type: number
+    - name: ingested_utc
+      type: string
+    - name: receipt_file
+      type: string
+    candidate_keys:
+    - checkout_id
+    - representative_asma_id
+    - n_isolates_scored
+    - member_asma_ids
 - path: gapmind-aa-rules.tsv
   format: tsv
   size_bytes: 29194518
@@ -1774,131 +2922,46 @@ resources:
     candidate_keys:
     - ASMA_id
     - gene_id
-- path: mucin/config/curated-transporters.tsv
+- path: metabolic-model/competition-data/competition-inhibition-summary.tsv
   format: tsv
-  size_bytes: 2246
-  mtime: '2026-06-17T17:21:58Z'
-  rows: 23
+  size_bytes: 142555
+  mtime: '2026-08-31T19:35:25Z'
+  rows: 1328
   sheet: null
   schema:
     fields:
-    - name: '# Curated transporter gating: monomer -> HMM-evidenced transport reaction injected into the
-        gapseq'
+    - name: community
       type: string
+    - name: community_species
+      type: string
+    - name: n_slots
+      type: integer
+    - name: n_species
+      type: integer
+    - name: dose_pattern
+      type: string
+    - name: reporter
+      type: string
+    - name: ratio_nominal
+      type: integer
+    - name: n_reps
+      type: integer
+    - name: n_dates
+      type: integer
+    - name: inhibition_mean
+      type: number
+    - name: inhibition_median
+      type: number
+    - name: inhibition_sd
+      type: number
+    - name: inhibition_min
+      type: number
+    - name: inhibition_max
+      type: number
     candidate_keys: []
-- path: mucin/config/galnac-pts-components.tsv
-  format: tsv
-  size_bytes: 2105
-  mtime: '2026-06-17T17:21:32Z'
-  rows: 26
-  sheet: null
-  schema:
-    fields:
-    - name: '# GalNAc-PTS (Aga) HMM component panel -- maps each profile in config/galnac-pts.hmm to its
-        PTS'
-      type: string
-    candidate_keys: []
-- path: mucin/config/gapseq-substrates.tsv
-  format: tsv
-  size_bytes: 1936
-  mtime: '2026-06-17T20:49:58Z'
-  rows: 16
-  sheet: null
-  schema:
-    fields:
-    - name: '# L3 gapseq sole-carbon-source substrates (stage G). One row per growth monomer.'
-      type: string
-    candidate_keys: []
-- path: mucin/config/gram-markers.tsv
-  format: tsv
-  size_bytes: 2724
-  mtime: '2026-06-15T22:41:06Z'
-  rows: 36
-  sheet: null
-  schema:
-    fields:
-    - name: '# Gram-typing marker panel -- curated cell-envelope HMMs (Pfam family NAMEs).'
-      type: string
-    candidate_keys: []
-- path: mucin/config/l1-families.tsv
-  format: tsv
-  size_bytes: 5576
-  mtime: '2026-06-09T20:52:21Z'
-  rows: 36
-  sheet: null
-  schema:
-    fields:
-    - name: '# L1 (Cleave) detection map: enzyme family -> mucin monomer. CANONICAL machine-read table.'
-      type: string
-    candidate_keys: []
-- path: mucin/config/l1-subfamily-anchors.csv
-  format: csv
-  size_bytes: 6316
-  mtime: '2026-06-09T20:41:02Z'
-  rows: 24
-  sheet: null
-  schema:
-    fields:
-    - name: family
-      type: string
-    - name: target_subclade
-      type: string
-    - name: target_activity_EC
-      type: string
-    - name: anchor_protein
-      type: string
-    - name: organism
-      type: string
-    - name: identifier
-      type: string
-    - name: substrate_shown
-      type: string
-    - name: confidence
-      type: string
-    - name: citation
-      type: string
-    - name: notes
-      type: string
-    candidate_keys: []
-- path: mucin/config/l1-substrate-gates.tsv
-  format: tsv
-  size_bytes: 1026
-  mtime: '2026-06-09T22:59:39Z'
-  rows: 11
-  sheet: null
-  schema:
-    fields:
-    - name: '# Substrate/EC confirmation gate for polyspecific / subclade-gated L1 families (dbCAN-sub
-        "fast first pass").'
-      type: string
-    candidate_keys: []
-- path: mucin/config/l2-transporters.tsv
-  format: tsv
-  size_bytes: 2741
-  mtime: '2026-06-10T00:25:18Z'
-  rows: 22
-  sheet: null
-  schema:
-    fields:
-    - name: '# L2 (Uptake) detection map: monomer -> transporter system. Drafted from WORKFLOW-PLAN.md
-        §5.'
-      type: string
-    candidate_keys: []
-- path: mucin/config/l3-modules.tsv
-  format: tsv
-  size_bytes: 3342
-  mtime: '2026-06-10T00:17:21Z'
-  rows: 32
-  sheet: null
-  schema:
-    fields:
-    - name: '# L3 (Catabolize) module map: monomer -> catabolic route -> step. Drafted from WORKFLOW-PLAN.md
-        §6 + alt routes.'
-      type: string
-    candidate_keys: []
-latest_resource: growth/predicted-growers-lacking-data.tsv
+latest_resource: metabolic-model/competition-data/competition-inhibition-summary.tsv
 size:
-  total_bytes: 28933860522
+  total_bytes: 28933860605
   file_count: 20000
   truncated: true
 subdirectories:
@@ -1932,6 +2995,13 @@ subdirectories:
     .yaml: 1
     (noext): 1
     .md: 1
+- name: asma-summary
+  mtime: '2026-07-27T20:59:38Z'
+  immediate_files: 1
+  immediate_subdirs: 4
+  immediate_bytes: 20425
+  file_types:
+    .md: 1
 - name: fastani
   mtime: '2026-02-25T21:42:45Z'
   immediate_files: 6
@@ -1943,6 +3013,14 @@ subdirectories:
     .csv: 1
     .txt: 1
     .py: 1
+- name: formulation-picker
+  mtime: '2026-08-04T18:45:11Z'
+  immediate_files: 2
+  immediate_subdirs: 6
+  immediate_bytes: 68431
+  file_types:
+    .json: 1
+    .md: 1
 - name: gapseq
   mtime: '2026-06-25T21:15:53Z'
   immediate_files: 18
@@ -1977,10 +3055,10 @@ subdirectories:
     .txt: 1
     .json: 1
 - name: isolates
-  mtime: '2026-07-01T09:40:25Z'
+  mtime: '2026-08-31T18:02:26Z'
   immediate_files: 5
   immediate_subdirs: 4938
-  immediate_bytes: 63118
+  immediate_bytes: 63201
   file_types:
     .txt: 2
     .smk: 1
@@ -2003,13 +3081,21 @@ subdirectories:
     .py: 1
     .sh: 1
     .csv: 1
-- name: mucin
-  mtime: '2026-06-29T20:31:21Z'
-  immediate_files: 14
-  immediate_subdirs: 7
-  immediate_bytes: 768146
+- name: metabolic-model
+  mtime: '2026-09-01T19:25:01Z'
+  immediate_files: 2
+  immediate_subdirs: 5
+  immediate_bytes: 9267128
   file_types:
-    .md: 6
+    .md: 1
+    .png: 1
+- name: mucin
+  mtime: '2026-08-31T17:59:22Z'
+  immediate_files: 15
+  immediate_subdirs: 7
+  immediate_bytes: 772102
+  file_types:
+    .md: 7
     .py: 4
     .sh: 1
     .txt: 1
@@ -2019,7 +3105,7 @@ subdirectories:
   mtime: '2026-07-21T17:07:20Z'
   immediate_files: 18
   immediate_subdirs: 8
-  immediate_bytes: 1494206
+  immediate_bytes: 1496468
   file_types:
     .md: 6
     .py: 5
@@ -2064,29 +3150,37 @@ subdirectories:
     (noext): 6
     .json: 1
     .r: 1
+- name: streptococcus
+  mtime: '2026-08-25T18:03:50Z'
+  immediate_files: 0
+  immediate_subdirs: 1
+  immediate_bytes: 0
+  file_types: {}
 - name: temp-figure
-  mtime: '2026-07-21T23:42:45Z'
-  immediate_files: 3
-  immediate_subdirs: 0
-  immediate_bytes: 292564
+  mtime: '2026-07-24T22:05:57Z'
+  immediate_files: 10
+  immediate_subdirs: 1
+  immediate_bytes: 1524704
   file_types:
-    .py: 1
-    .csv: 1
-    .png: 1
+    .py: 3
+    .csv: 3
+    .png: 2
+    .xlsx: 1
+    .svg: 1
 - name: temp-figures
-  mtime: '2026-06-04T15:59:36Z'
+  mtime: '2026-08-19T19:50:28Z'
   immediate_files: 6
-  immediate_subdirs: 0
+  immediate_subdirs: 1
   immediate_bytes: 1294277
   file_types:
     .tsv: 3
     .png: 2
     .py: 1
-latest_subdir: temp-figure
+latest_subdir: metabolic-model
 freshness:
-  last_crawled: '2026-07-22T09:06:52Z'
-  source_mtime_latest: '2026-07-21T23:21:15Z'
+  last_crawled: '2026-09-03T09:05:48Z'
+  source_mtime_latest: '2026-08-31T18:02:26Z'
   cadence_observed: null
 owner_manifest:
   path: /usr2/people/alex.styer/protect/MANIFEST.md
-  last_updated_claimed: '2026-07-08'
+  last_updated_claimed: '2026-09-01'

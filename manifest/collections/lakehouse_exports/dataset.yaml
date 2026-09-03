@@ -19,22 +19,50 @@ access:
 resources: []
 latest_resource: null
 size:
-  total_bytes: 48242337288
-  file_count: 120
+  total_bytes: 118059129744
+  file_count: 5129
   truncated: false
 subdirectories:
-- name: formulation_export_20260701_171043
-  mtime: '2026-07-02T00:10:52Z'
+- name: formulation_export_20260902_163742
+  mtime: '2026-09-02T23:37:42Z'
   immediate_files: 2
   immediate_subdirs: 1
-  immediate_bytes: 5293414
+  immediate_bytes: 6073419
   file_types:
     .txt: 2
+- name: genome-analysis_export_20260819_082422
+  mtime: '2026-08-19T15:24:23Z'
+  immediate_files: 3
+  immediate_subdirs: 1
+  immediate_bytes: 14559698
+  file_types:
+    .txt: 3
+- name: genome-features_export_20260902_163750
+  mtime: '2026-09-02T23:37:56Z'
+  immediate_files: 4
+  immediate_subdirs: 1
+  immediate_bytes: 37501479
+  file_types:
+    .txt: 4
+- name: genome-sequences_export_20260820_160047
+  mtime: '2026-08-21T23:10:05Z'
+  immediate_files: 26
+  immediate_subdirs: 2
+  immediate_bytes: 23376222487
+  file_types:
+    .txt: 26
 - name: integration_export_20260701_143013
   mtime: '2026-07-01T21:30:15Z'
   immediate_files: 7
   immediate_subdirs: 1
   immediate_bytes: 3298232
+  file_types:
+    .txt: 7
+- name: integration_export_20260827_191258
+  mtime: '2026-08-28T02:13:00Z'
+  immediate_files: 7
+  immediate_subdirs: 1
+  immediate_bytes: 3311250
   file_types:
     .txt: 7
 - name: mind-analysis_export_20260429_150000
@@ -44,19 +72,27 @@ subdirectories:
   immediate_bytes: 22993986266
   file_types:
     .txt: 31
-- name: phenotype_export_20260701_171343
-  mtime: '2026-07-02T00:13:48Z'
-  immediate_files: 4
+- name: phenotype_export_20260902_163722
+  mtime: '2026-09-02T23:37:24Z'
+  immediate_files: 13
   immediate_subdirs: 1
-  immediate_bytes: 2190377
+  immediate_bytes: 14471145
   file_types:
-    .txt: 4
+    .txt: 13
 - name: previous_exports
-  mtime: '2026-07-01T22:05:56Z'
-  immediate_files: 0
-  immediate_subdirs: 3
-  immediate_bytes: 0
-  file_types: {}
+  mtime: '2026-09-02T23:36:35Z'
+  immediate_files: 1
+  immediate_subdirs: 7
+  immediate_bytes: 23375015239
+  file_types:
+    .txt: 1
+- name: reference_export_20260902_163745
+  mtime: '2026-09-02T23:37:45Z'
+  immediate_files: 3
+  immediate_subdirs: 1
+  immediate_bytes: 282270
+  file_types:
+    .txt: 3
 - name: refinery-bronze_export_20260624_155541
   mtime: '2026-06-24T22:58:22Z'
   immediate_files: 24
@@ -64,10 +100,10 @@ subdirectories:
   immediate_bytes: 2221472846
   file_types:
     .txt: 24
-latest_subdir: phenotype_export_20260701_171343
+latest_subdir: genome-features_export_20260902_163750
 freshness:
-  last_crawled: '2026-07-22T09:00:03Z'
-  source_mtime_latest: '2026-07-02T00:13:48Z'
+  last_crawled: '2026-09-03T09:00:04Z'
+  source_mtime_latest: '2026-09-02T23:37:56Z'
   cadence_observed: null
 owner_manifest:
   path: /usr2/people/protect/Arkin_Lab/protect_data/protect_lakehouse_pipeline/data/exports/README.md

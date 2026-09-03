@@ -88,6 +88,25 @@ collections:
     scan_depth: 2
     max_resources: 60
 
+  # ---- Nizet — In vivo mouse efficacy ---------------------------------------
+  - id: asma_invivo_efficacy
+    title: ASMA In Vivo Mouse Efficacy (Task 3.1)
+    collection_root: /usr2/people/protect/Nizet_Lab
+    team: Nizet
+    domain: In vivo efficacy
+    owner: {name: Fatemeh Askarian, lab: Nizet, contact: faaskarian@health.ucsd.edu}
+    # IN_VIVO is a new facet. Nothing in the existing taxonomy describes host
+    # challenge data, and without it this collection cannot be found by the one
+    # property that defines it. Added deliberately, not ad hoc.
+    # RAW *and* CLEANED both apply: the collection holds the immutable raw drop
+    #   (data_dump_8_7_26/) and the regenerated curated tables (invivo_curated/)
+    #   side by side. See CARD.md for which is which.
+    # FORMULATION: the ASMA combinations under test are Task-2.1 formulations
+    #   carried into a host, so this is the in vivo arm of the formulation work.
+    tags: [IN_VIVO, ISOLATE, FORMULATION, PHENOTYPE, RAW, CLEANED]
+    scan_depth: 3              # raw drop / curated tables / review sit in subdirs
+    max_resources: 60
+
   - id: protect_sample_roster
     title: PROTECT Sample Roster
     collection_root: /usr2/people/protect/Zengler_Lab

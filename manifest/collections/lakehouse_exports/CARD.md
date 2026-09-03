@@ -2,10 +2,10 @@
 # Human-owned card. The crawler NEVER edits this file.
 collection_id: lakehouse_exports
 maintainer: Spencer Long (Arkin Lab)
-last_reviewed: 2026-08-19
-summary: Dated snapshot exports of PROTECT tables staged to/from the KBase lakehouse (integration + mind-analysis namespaces). The window into what exists in the lakehouse for people who can't query it directly yet.
-keywords: [lakehouse, KBase, data lake, exports, txt export tables, integration export, mind-analysis export, genome-analysis export, taxonomy, isolate taxonomy, GTDB, strain group, lakehouse tables, staged data, cleaned tables, silver layer, refinery bronze]
-related: [patient_sample_isolate_linkage, zengler_metagenomics_mind]
+last_reviewed: 2026-09-03
+summary: Dated snapshot exports of PROTECT tables staged to/from the KBase lakehouse, across eight live namespaces. The window into what exists in the lakehouse for people who can't query it directly yet. As of 2026-09-03 this includes the SOW Task-2.1 formulation exclusion screen, SYK's phenotyping, the ASMA stock registry, and the strain-level decision card.
+keywords: [lakehouse, KBase, data lake, exports, formulation, competition screen, exclusion screen, SynCom, phenotype, growth curve, hemolysis, antibiotic resistance, AMR genes, virulence factors, ASMA stock list, FREP plate map, decision card, unified sheet, shortlist, txt export tables, integration export, mind-analysis export, genome-analysis export, taxonomy, isolate taxonomy, GTDB, strain group, lakehouse tables, staged data, cleaned tables, silver layer, refinery bronze]
+related: [patient_sample_isolate_linkage, zengler_metagenomics_mind, asma_phenotyping, asma_genomics]
 ---
 
 # KBase Lakehouse Exports
@@ -30,6 +30,40 @@ related: [patient_sample_isolate_linkage, zengler_metagenomics_mind]
 > `asma_id` unique. Column-by-column docs:
 > `Arkin_Lab/sjlong/task_4_3_and_4_4/track_a/A2b_A3/a3_taxonomy_data_dictionary.md`.
 
+> ## ⚠ `protect.curated` is DERIVED. Not one column in it is a measurement.
+>
+> The Formulation Unified Data Sheet. Values are **aggregated to strain grain and cut by
+> team-owned thresholds**; a column there answers *"what did we decide"*, not *"what was
+> measured"*. Every gate and cutoff is a **provisional default the biologists own**, not a
+> finding. **A blank cell means "not screened yet", not "no result".** `is_candidate = True`
+> means *"not a known pathogen"*, **NOT** *"safety cleared"*.
+>
+> **For the measurements go to `protect.phenotype`, `protect.formulation`,
+> `protect.genome_analysis`.**
+>
+> Gwyn Hutchinson's tissue data is **deliberately excluded** pending her sign-off (PROTECT-5):
+> `silver_tissue` is absent and `gold_unified_sheet` carries 31 columns, not the sheet's 33.
+
+> ## ⚠ In `isolate_amr_genes` and `isolate_virulence_factors`, `'NA'` is a VALUE, not a null
+>
+> Both files encode **"this isolate was screened and NOTHING was found"** as a placeholder row
+> whose every field except `asma_id` is the literal string `NA`: **943 rows in amrfinder** (943
+> distinct isolates, 19% of the 4,923 present) and **2,911 in metaVF**. Those rows are the only
+> record that the isolate was screened at all, which is a different fact from being absent.
+> **Do not filter them as junk.**
+>
+> Separately, in `protein_id` **empty and `'NA'` are not synonyms**: `'NA'` (943) is the
+> placeholder, `NULL` (1,059) is a **real hit with no callable protein**.
+>
+> Numeric-looking columns (`start`, `stop`, `pct_identity_to_reference`, …) are **STRING**
+> because they carry that `'NA'`. Typing them numerically nulls exactly those rows.
+
+> ## ⚠ A blank hemolysis call means "not determined", not "negative"
+>
+> `protect.phenotype.hemolysis_screen.beta_hemolysis_24h` has 1,168 calls over 1,638 rows.
+> **167 of the blanks are rows where `growth = 'N'`** — no growth, so no call was possible; the
+> rest were read only at 48h/72h. **Counting `= 'N'` as "safe" misreads 470 of 1,638 rows.**
+
 ## What this is
 **Dated export snapshots** of PROTECT tables staged to the KBase lakehouse. This collection is the
 **bridge for people without lakehouse access**: it lets them see *what has been pushed to the lake
@@ -38,12 +72,16 @@ and when*, even though they can't query the lakehouse directly yet. The exports 
 
 | Namespace dir pattern | What it holds |
 |---|---|
-| `integration_export_<date>/` | integration namespace — the linked/cleaned ("Silver Layer") tables |
-| `mind-analysis_export_<date>/` | mind-analysis namespace — Zengler MIND outputs |
-| `phenotype_export_<date>/` | `protect_phenotype` — SYK phenotyping: `carbon_utilization`, `growth_curve_scfm`, `antibiotic_resistance` |
-| `formulation_export_<date>/` | `protect_formulation` — SYK formulation exclusion screen: `competition_screen` |
-| `genome-analysis_export_<date>/` | `protect_genome_analysis` — Alex Styer's ASMA taxonomy, **live 2026-08-19**: `isolate_taxonomy` (4,927, one per **isolate**, `asma_id` unique) + `genome_taxonomy` (5,725, one per **assembly**) |
-| `refinery-bronze_export_<date>/` | `protect_refinery_bronze` — aparkin's frozen Bronze refinery: 23 tables, ~30.6M rows. **⛔ NOT A CURATED SOURCE — see the warning below** |
+| `integration_export_<date>/` | `protect.integration` — the linked/cleaned tables |
+| `mind-analysis_export_<date>/` | `protect.mind` — Zengler MIND outputs. ⚠ built from a **superseded April 2026 vintage**; refresh tracked as PROTECT-17 |
+| `phenotype_export_<date>/` | `protect.phenotype` — **live 2026-09-03**, 12 tables / 20,353 rows. SYK bench assays (growth endpoint, growth curves, antibiotic resistance v1+v2, carbon utilization) + Cassie Reyes's hemolysis screen and its re-screen |
+| `formulation_export_<date>/` | `protect.formulation` — **live 2026-09-03**, `competition_screen`, **28,928 rows**. The SOW Task-2.1 in-vitro exclusion screen: 0–5-member SynComs vs 8 pathogen reporters |
+| `reference_export_<date>/` | `protect.reference` — **live 2026-09-03**, `asma_stock_list` (3,972 isolates + freezer location) and `asma_frep_plate_map` (784 wells) |
+| `curated_export_<date>/` | `protect.curated` — **live 2026-09-03**, 17 tables / 19,081 rows. The Formulation Unified Data Sheet. ⚠ **DERIVED, not measurements** — see the warning below |
+| `genome-analysis_export_<date>/` | `protect.genome_analysis` — **live 2026-08-19**: `isolate_taxonomy` (4,927, one per **isolate**, `asma_id` unique) + `genome_taxonomy` (5,725, one per **assembly**) |
+| `genome-features_export_<date>/` | `protect.genome_analysis`, **added 2026-09-03**: `isolate_amr_genes` (34,082), `isolate_virulence_factors` (172,263), `isolate_ani_clusters` (599). ⚠ **`'NA'` is a VALUE here** — see below |
+| `genome-sequences_export_<date>/` | `protect.genome_analysis` — `contig_sequences`, 7,785,073 rows |
+| `refinery-bronze_export_<date>/` | `protect.refinery_bronze` — aparkin's frozen Bronze refinery. **⛔ NOT A CURATED SOURCE — see the warning below** |
 | `previous_exports/` | archived earlier snapshots |
 
 > The **current dated export dirs and their dates** live in the sibling `dataset.yaml`: each entry in
@@ -60,7 +98,11 @@ and when*, even though they can't query the lakehouse directly yet. The exports 
 - *"Is there a cleaned/joined PROTECT table already in the lakehouse?"* → yes — the newest
   `integration_export_<date>/` snapshot (see `dataset.yaml` `subdirectories` for the current one).
 - *"What's been pushed to the lakehouse, and when?"* → the dated export subdirs (`dataset.yaml` `subdirectories`).
-- *"MIND analysis in the lakehouse?"* → the newest `mind-analysis_export_<date>/`.
+- *"MIND analysis in the lakehouse?"* → the newest `mind-analysis_export_<date>/`. ⚠ superseded vintage; PROTECT-17.
+- *"Where is the formulation / exclusion screen?"* → `protect.formulation.competition_screen`, 28,928 wells, live 2026-09-03. The SOW Task-2.1 deliverable.
+- *"Which strains beat PA, and are they safe?"* → `protect.curated.gold_unified_sheet` for the decision card, `protect.curated.formulation_shortlist` for the ranked list. **Both derived — read the warning above.**
+- *"Where is a strain physically stored?"* → `protect.reference.asma_stock_list`.
+- *"Which isolates carry AMR genes?"* → `protect.genome_analysis.isolate_amr_genes`. **Read the `'NA'` warning above first.**
 
 ## Caveats & known issues
 - **Table-level schemas inside the exports aren't catalogued yet.** Each export's tables are flat,
@@ -80,3 +122,10 @@ separate capability most scientists don't have — that's the access gap this co
 
 ## Maintainer & cadence
 **Spencer Long / Arkin data team.** New exports appear when tables are (re)staged to the lake.
+
+**Per-namespace documentation** now lives beside the code, one README per namespace, each leading
+with what will bite a reader: `protect_lakehouse_pipeline/datasets/<name>/README.md`. The run
+record for the 2026-09-03 formulation push, including every `dump_path` and the verification
+result, is `protect_lakehouse_pipeline/datasets/_runs/formulation_push_20260903/README.md`.
+The binding rule for **which namespace a new dataset belongs in** is
+`protect_lakehouse_pipeline/docs/lakehouse_ingestion_ruleset.md` §4b-bis.

@@ -63,7 +63,11 @@ April-2026 inventory flag set:
 `CLINICAL`, `LINKAGE`, `ISOLATE`, `PHENOTYPE`, `CARBON_UTILIZATION`, `REPORTER`, `AMR`,
 `VIRULENCE`, `TAXONOMY`, `GENOME`, `MIND`, `MULTI_OMICS`, `FORMULATION`, `NIF_NICHE_INDEX`,
 `SAMPLE_ROSTER`, `LAKEHOUSE_EXPORT`, `PIPELINE_OUTPUT`, `COMPUTATIONAL_TOOL`, `MODEL_ARTIFACT`,
-`RAW`, `CLEANED`, `DEPRECATED`.
+`IN_VIVO`, `RAW`, `CLEANED`, `DEPRECATED`.
+
+`IN_VIVO` was added 2026-08-25 for animal-model challenge and engraftment data
+(Task 3.1), which nothing in the seeded set described. Use it for data whose grain
+is an animal rather than an isolate, a sample, or a patient.
 
 ## Federation (owner-maintained manifests)
 When a data owner maintains their own manifest (e.g. Alex Styer's `~/protect/MANIFEST.md`), we
