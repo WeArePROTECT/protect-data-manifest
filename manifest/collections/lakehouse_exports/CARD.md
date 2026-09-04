@@ -2,9 +2,9 @@
 # Human-owned card. The crawler NEVER edits this file.
 collection_id: lakehouse_exports
 maintainer: Spencer Long (Arkin Lab)
-last_reviewed: 2026-09-03
-summary: Dated snapshot exports of PROTECT tables staged to/from the KBase lakehouse, across eight live namespaces. The window into what exists in the lakehouse for people who can't query it directly yet. As of 2026-09-03 this includes the SOW Task-2.1 formulation exclusion screen, SYK's phenotyping, the ASMA stock registry, and the strain-level decision card.
-keywords: [lakehouse, KBase, data lake, exports, formulation, competition screen, exclusion screen, SynCom, phenotype, growth curve, hemolysis, antibiotic resistance, AMR genes, virulence factors, ASMA stock list, FREP plate map, decision card, unified sheet, shortlist, txt export tables, integration export, mind-analysis export, genome-analysis export, taxonomy, isolate taxonomy, GTDB, strain group, lakehouse tables, staged data, cleaned tables, silver layer, refinery bronze]
+last_reviewed: 2026-09-04
+summary: Dated snapshot exports of PROTECT tables staged to/from the KBase lakehouse, across nine live namespaces. The window into what exists in the lakehouse for people who can't query it directly yet. As of 2026-09-03 this includes the SOW Task-2.1 formulation exclusion screen, SYK's phenotyping, the ASMA stock registry, and the strain-level decision card.
+keywords: [lakehouse, KBase, data lake, exports, formulation, competition screen, exclusion screen, SynCom, phenotype, growth curve, hemolysis, antibiotic resistance, AMR genes, virulence factors, ASMA stock list, FREP plate map, decision card, unified sheet, shortlist, txt export tables, integration export, mind-analysis export, genome-analysis export, taxonomy, isolate taxonomy, GTDB, strain group, lakehouse tables, staged data, cleaned tables, silver layer, refinery bronze, genomedepot, eggNOG, KEGG, browser tables, NAMESPACES.md]
 related: [patient_sample_isolate_linkage, zengler_metagenomics_mind, asma_phenotyping, asma_genomics]
 ---
 
@@ -12,7 +12,7 @@ related: [patient_sample_isolate_linkage, zengler_metagenomics_mind, asma_phenot
 
 > Machine facts and the **dated export subdirectories** live in the sibling `dataset.yaml`.
 
-> ## ⛔ Do not use `protect_refinery_bronze` as a data source
+> ## ⛔ Do not use `protect.refinery_bronze` as a data source
 >
 > It is a **frozen, second-hand 2026-03-07 copy** of Adam Arkin's pre-existing refinery,
 > ingested only so he could reach data he already had. It is uncurated, unrefreshed, and
@@ -25,10 +25,24 @@ related: [patient_sample_isolate_linkage, zengler_metagenomics_mind, asma_phenot
 > `assembly_type`/`assembler` **missing**, and **22 duplicate `asma_id`**. Anyone who pulled
 > strain groups from it has wrong strain groups.
 >
-> **Use `protect_genome_analysis.isolate_taxonomy` instead** — **live on the lakehouse since
+> **Use `protect.genome_analysis.isolate_taxonomy` instead** — **live on the lakehouse since
 > 2026-08-19**, verified (row counts + 17 smoke tests all passed). 4,927 isolates, one row each,
 > `asma_id` unique. Column-by-column docs:
-> `Arkin_Lab/sjlong/task_4_3_and_4_4/track_a/A2b_A3/a3_taxonomy_data_dictionary.md`.
+> `protect_lakehouse_pipeline/datasets/genome-analysis/docs/data_dictionary.md`.
+
+> ## ⛔ `protect.integration` destroys clinical data, and the repair did not fix it
+>
+> `pd.read_csv` reads the string `'None'` as missing. In PROTECT's REDCap data `'None'` is a
+> **real clinical category** meaning *confirmed on no antibiotics* / *no CFTR modulator*, which
+> is not the same as unknown. PROTECT-11 guarded four reads and closed; it was not enough,
+> because `stage1_redcap_clean.py:312` reads the raw export unguarded and is **upstream of all
+> four**. In `airway_clearance` the source column has **no genuinely missing values at all**, so
+> **100% of its NULLs are destroyed data**. Lowercase `'none'` survives and `'None'` does not.
+>
+> Four more defects of the same shape are open: columns declared `BOOLEAN` that hold `Yes`/`No`,
+> free text, or undecoded REDCap codes. **Treat every categorical in this namespace as suspect
+> until PROTECT-12 closes.** Full analysis:
+> `protect_lakehouse_pipeline/docs/na_coercion_sweep_2026-08-28.md`.
 
 > ## ⚠ `protect.curated` is DERIVED. Not one column in it is a measurement.
 >
@@ -81,6 +95,7 @@ and when*, even though they can't query the lakehouse directly yet. The exports 
 | `genome-analysis_export_<date>/` | `protect.genome_analysis` — **live 2026-08-19**: `isolate_taxonomy` (4,927, one per **isolate**, `asma_id` unique) + `genome_taxonomy` (5,725, one per **assembly**) |
 | `genome-features_export_<date>/` | `protect.genome_analysis`, **added 2026-09-03**: `isolate_amr_genes` (34,082), `isolate_virulence_factors` (172,263), `isolate_ani_clusters` (599). ⚠ **`'NA'` is a VALUE here** — see below |
 | `genome-sequences_export_<date>/` | `protect.genome_analysis` — `contig_sequences`, 7,785,073 rows |
+| *(not staged here)* | `protect.genomedepot` — 39 `browser_*` tables mirrored from the GenomeDepot MariaDB. **Its exports stage from a different directory**, so they do not appear in this collection. **Refreshed 2026-09-04**: 46,321,767 → 92,916,568 rows, the growth entirely **functional annotation** (eggNOG, KEGG, GO, COG, CAZy, TC). ⚠ **Any GenomeDepot function analysis predating 2026-09-04 saw almost no annotation data** — `browser_eggnog_description` was 91 rows and is now 30,359 |
 | `refinery-bronze_export_<date>/` | `protect.refinery_bronze` — aparkin's frozen Bronze refinery. **⛔ NOT A CURATED SOURCE — see the warning below** |
 | `previous_exports/` | archived earlier snapshots |
 
@@ -97,6 +112,7 @@ and when*, even though they can't query the lakehouse directly yet. The exports 
 ## Example questions this answers
 - *"Is there a cleaned/joined PROTECT table already in the lakehouse?"* → yes — the newest
   `integration_export_<date>/` snapshot (see `dataset.yaml` `subdirectories` for the current one).
+  **Read the `protect.integration` warning above before using it for anything clinical.**
 - *"What's been pushed to the lakehouse, and when?"* → the dated export subdirs (`dataset.yaml` `subdirectories`).
 - *"MIND analysis in the lakehouse?"* → the newest `mind-analysis_export_<date>/`. ⚠ superseded vintage; PROTECT-17.
 - *"Where is the formulation / exclusion screen?"* → `protect.formulation.competition_screen`, 28,928 wells, live 2026-09-03. The SOW Task-2.1 deliverable.
@@ -127,5 +143,11 @@ separate capability most scientists don't have — that's the access gap this co
 with what will bite a reader: `protect_lakehouse_pipeline/datasets/<name>/README.md`. The run
 record for the 2026-09-03 formulation push, including every `dump_path` and the verification
 result, is `protect_lakehouse_pipeline/datasets/_runs/formulation_push_20260903/README.md`.
+**The complete index of what is on the lakehouse** — every namespace, table, row count, layer
+and status, indexed both namespace-to-directory and directory-to-namespace — is
+`protect_lakehouse_pipeline/NAMESPACES.md`. It covers `protect.genomedepot` too, which does not
+stage through this collection.
+
 The binding rule for **which namespace a new dataset belongs in** is
-`protect_lakehouse_pipeline/docs/lakehouse_ingestion_ruleset.md` §4b-bis.
+`protect_lakehouse_pipeline/docs/lakehouse_ingestion_ruleset.md` §4b-bis. The rule for **where a
+dataset's code and documents live** is §10 of the same file (PROTECT-18, 2026-09-04).
