@@ -2,7 +2,7 @@
 # Human-owned card. The crawler NEVER edits this file.
 collection_id: integration_pipeline_outputs
 maintainer: Spencer Long (Arkin data team)
-last_reviewed: 2026-07-22
+last_reviewed: 2026-09-04
 summary: The integration pipeline's dated-run outputs — the cleaned + linked "warehouse" tables. Holds the canonical CLEANED REDCap clinical, cleaned Conrad micro/sample data, the merged clinical⨝isolate⨝sample⨝patient table, and the multiomics integration. The analysis-ready, joined PROTECT data. Newest run is current; outputs vary by run.
 keywords: [cleaned clinical, cleaned REDCap, clinical clean, merged table, clinical isolate sample patient merged, multiomics integration, integrated data, platinum, warehouse, pipeline outputs, pipeline runs, cleaned microbiology, cleaned sample metadata, analysis-ready, joined data, integration pipeline]
 related: [patient_sample_isolate_linkage, clinical_redcap_raw, asma_genomics, asma_phenotyping, zengler_metagenomics_mind]
@@ -41,8 +41,26 @@ merged / cleaned-clinical tables:
   encode the enrollment/disease group. **What each code means is not documented here — to verify with
   the Conrad team** (which codes are CF vs non-CF bronchiectasis vs other).
 - **`cftr_modulator_status`** — the patient's CFTR-modulator drug (`Trikafta` / `Kalydeco` / `Alyftrek`
-  / `Symdeko` / …) or blank/`None`. A named modulator strongly implies a **CF** patient; blank/`None`
-  implies not on a modulator (often non-CF). This is an *inference*, not a definitive diagnosis label.
+  / `Symdeko` / …), or `None`, or blank. A named modulator strongly implies a **CF** patient. This is
+  an *inference*, not a definitive diagnosis label.
+
+  > ⚠ **`None` and blank are NOT the same value, and treating them as one is the PROTECT-11 defect.**
+  > The REDCap data dictionary defines this field as a dropdown where **`6, None`** and
+  > **`7, Unknown/Unavailable`** are separate codes by design, and code 7 is **never used** in the
+  > raw export. So `None` was actively selected by a clinician and means *confirmed on no modulator*;
+  > a blank means the question was never answered. `antibiotic_status` is the same shape and has **no
+  > unknown option at all**.
+  >
+  > This matters because `pd.read_csv` silently converts the string `'None'` to `NaN`, which merges
+  > the two. It has already happened: 1,645 of 1,649 rows reading as "unknown" were in fact
+  > *confirmed on no antibiotics*. The named columns were repaired 2026-08-27, **but the defect class
+  > is still open** (PROTECT-12): `stage1_redcap_clean.py:312` is unguarded and upstream of every read
+  > the repair fixed, and `airway_clearance` still has 100% of its NULLs destroyed. Full analysis:
+  > `protect_lakehouse_pipeline/docs/na_coercion_sweep_2026-08-28.md`.
+  >
+  > **Authoritative source for what any REDCap coded value means:**
+  > `Conrad_Lab/metadata/RedCapDataExports/raw/dictionary/PROTECT_DataDictionary_2026-03-06.csv`
+  > (677 fields, with Field Type and choice labels).
 - **`age_group`** (`adult`/`pediatric`) and the linkage `patient_type` (`adult`/`pediatric`/`healthy_donor`)
   are **age/donor axes, not disease** — don't use them for CF vs non-CF.
 
