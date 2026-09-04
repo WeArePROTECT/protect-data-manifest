@@ -12645,7 +12645,7 @@ subdirectories:
   file_types: {}
 latest_subdir: PA_genomes
 freshness:
-  last_crawled: '2026-09-03T09:06:19Z'
+  last_crawled: '2026-09-04T09:06:07Z'
   source_mtime_latest: '2026-08-31T23:44:41Z'
   cadence_observed: null
 owner_manifest: null

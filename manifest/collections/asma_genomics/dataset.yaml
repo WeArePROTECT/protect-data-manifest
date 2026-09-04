@@ -3178,7 +3178,7 @@ subdirectories:
     .py: 1
 latest_subdir: metabolic-model
 freshness:
-  last_crawled: '2026-09-03T09:05:48Z'
+  last_crawled: '2026-09-04T09:05:37Z'
   source_mtime_latest: '2026-08-31T18:02:26Z'
   cadence_observed: null
 owner_manifest:
