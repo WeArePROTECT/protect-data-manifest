@@ -2,7 +2,7 @@
 # Human-owned card. The crawler NEVER edits this file.
 collection_id: asma_phenotyping
 maintainer: Spencer Long (Arkin Lab) — DRAFT, pending review by Sun-Young Kim (SYK)
-last_reviewed: 2026-07-22
+last_reviewed: 2026-09-04
 summary: Lab-measured phenotypes for the ASMA isolates — growth curves (BHI/SCFM), carbon & amino-acid utilization, PA reporter inhibition/competition assays, and measured antibiotic resistance. The phenotype half of the ASMA collection. IMPORTANT — the `Competition` sheet is the Task-2.1 in-vitro FORMULATION exclusion screen (1–5-member SynComs vs 8 pathogen reporters, computed Inhibition_percent). Join to the rest of PROTECT via ASMA_id (NOT the local sample_id).
 keywords: [phenotype, growth curve, growth, OD600, SCFM, BHI, carbon utilization, carbon source, sole carbon, carbon kinetics, amino acid utilization, reporter, PA reporter, inhibition, pairwise interaction, competition assay, formulation, formulation screen, in vitro exclusion, competitive exclusion, SynCom, community formulation, Inhibition_percent, PA14, PAO1, VAP pathogen, antibiotic resistance, measured AMR, MIC, isolate stock list, ASMA_list, APL metadata, Sun-Young Kim, SYK]
 related: [patient_sample_isolate_linkage, asma_genomics]
