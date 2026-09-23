@@ -2,7 +2,7 @@
 # Human-owned card. The crawler NEVER edits this file.
 collection_id: asma_invivo_efficacy
 maintainer: Spencer Long (Arkin data team) — curation; Fatemeh Askarian (Nizet Lab) — source data
-last_reviewed: 2026-09-02
+last_reviewed: 2026-09-23
 summary: Mouse lung challenge experiments testing whether ASMA candidate strains engraft and protect against Pseudomonas aeruginosa PA14 (PROTECT Task 3.1), as an immutable raw drop plus regenerated tidy tables.
 keywords: [in vivo, mouse, mice, animal model, Nizet, Askarian, Task 3.1, engraftment, PA14, challenge, CFU burden, clinical score, CBC, lung, intratracheal, CD-1, efficacy, histology, IACUC S00227M]
 related: [asma_genomics, asma_phenotyping, zengler_metagenomics_mind, patient_sample_isolate_linkage]
@@ -58,7 +58,8 @@ foreign keys, the value/qualifier contract, unit declaration, date ordering). Tr
 a build whose validation does not come back clean as unusable.
 
 Read `data_dump_8_7_26/docs/HANDOFF_2026-08-11.md` before doing anything with this
-collection. Live status is on Jira **PROTECT-9** (label `ws-nizet-invivo`).
+collection. Live status is on Jira **PROTECT-9** (label `ws-nizet-invivo`); the lakehouse load,
+`protect.invivo`, is **PROTECT-25** (`ws-nizet-invivo-ingest`).
 
 ## Table roles
 
@@ -103,18 +104,22 @@ PDFs are worth keeping alongside the workbooks. Same for the per-experiment dosi
 - *Which ASMA strains have been tested in a mouse, and against PA14 or alone?*
   `experiments.asma_strains` and `experiments.pa_challenge`, or `groups.treatment`.
 - *Does strain X reduce PA burden in the lung?* Filter `measurements` to
-  `assay == 'cfu_burden'`, `compartment == 'lung'`, `medium == 'cetrimide'`
-  (cetrimide is PA-selective), then compare the PA-only arm against the ASMA+PA arm
-  via `mice.group_id`. **Group by `unit` first**, see caveats.
-- *Did strain X itself engraft?* Same filter with the strain-selective medium
-  (for example `LB+tetracycline` for the ASMA2260R reporter). Do **not** use the
-  non-selective count for this, see caveats.
+  `assay == 'cfu_burden'`, `compartment == 'lung'`, **`selective_for == 'PA14'`**,
+  then compare the PA-only arm against the ASMA+PA arm via `mice.group_id`. **Group
+  by `unit` first**, see caveats. Do not filter on `medium == 'cetrimide'`: in Exps 7,
+  8, 10, 11 and 13 PA was counted on LB + tetracycline, and that filter misses them.
+- *Did strain X itself engraft?* Only the ASMA2260R reporter has a strain-selective
+  count: `selective_for == 'ASMA2260R'` (Exp.24). For every other strain, compare the
+  `non_selective` count (TSA/blood, or LB in Exps 5-13) between the PBS and engrafted
+  groups, see caveats.
 - *Were the animals sick?* `assay == 'clinical_score'`, 0 to 5, higher is worse.
-  The scale definition is in the protocol sidecars under `invivo_curated/protocols/`.
+  The scale is printed on the source sheets and reproduced verbatim in
+  `invivo_curated/docs/DATA_DICTIONARY.md` (it is not in the protocol sidecars).
 - *What was actually delivered, at what dose, on what schedule?*
   `experiments.delivered_dose_json` and the per-experiment YAML sidecars, which
   carry the IACUC number, anaesthesia, media, instruments and timings extracted
-  from the protocol PDFs.
+  from the protocol PDFs. **Apart from title, doses and dates the sidecars are the
+  same for every experiment**, so do not read them as per-experiment facts.
 - *Which animals should be left out?* `mice.excluded`, see caveats.
 
 ## Data dictionary (key columns)
@@ -160,15 +165,20 @@ An analysis that ignores the following will produce wrong numbers.
    zeros as values was a live analysis error: the mean of `log10_cfu_per_g` was
    4.5251 before the fix and is 4.9076 after. If you need these animals on a log
    axis, choose a floor explicitly and say which you used.
-3. **Some animals were excluded by the investigator.** In the source this is buried
-   inside mouse-number cells (`14* dead`) and, in one experiment, in the ninth
-   column of the last row of the sheet. The build promotes it to a first-class
-   field. **Filter `mice.excluded == False`.** A naive export of the original
-   workbooks silently readmits these animals.
+3. **19 of 481 animals are excluded: 16 died and 3 were excluded by the
+   investigator.** The source records a death five different ways (in the mouse
+   cell, the Treatment column, a measurement cell, a column with no header, or a
+   sentence below a block), and until 2026-09-23 the build marked only 7 of the 16.
+   Every death excludes the animal, procedural ones included; the cause is kept in
+   `exclusion_reason`. **Filter `mice.excluded == False`.** A naive export of the
+   original workbooks silently readmits these animals.
 4. **Non-selective plate counts are not strain-specific. CONFIRMED by the
    investigator 2026-08-31.** PBS control animals show real counts on TSA/blood
    agar, because that count is the background lung microbiome. Only the selective
-   media (cetrimide for PA, tetracycline for the reporter) are strain-specific.
+   plates are organism-specific, and **the same antibiotic selects different
+   organisms in different experiments**: LB + tetracycline counted PA in Exps 7, 8,
+   10, 11 and 13, while a tetracycline plate counts the ASMA2260R reporter in
+   Exp.24. `measurements.selective_for` states which, on every CFU row.
    Engraftment is assessed the way the Nizet lab does it: by comparing TSA/blood
    counts between the PBS group and the engrafted group, not by reading a
    non-selective count on its own.
@@ -201,12 +211,25 @@ Caveat 9 shrank: Experiment 12 was a PA dose-optimization study superseded by
 Exp.13, deliberately omitted rather than lost. Treat the remaining caveats as
 current.
 
+**Revised 2026-09-23** after an extraction audit of every source cell
+(`invivo_curated/docs/EXTRACTION_AUDIT_2026-09-23.md`, PROTECT-25). Everything the
+build had extracted was exact, but it had skipped Experiment 18's entire CBC block
+(450 readings), left 9 of 16 deaths unmarked, never applied one documented
+exclusion, dropped 14 investigator notes and 2 challenge dates, and recorded nothing
+about which organism a selective plate counted. All fixed; no extracted value
+changed. New since then: the `source_annotations` table (every investigator note,
+verbatim), and the columns `selective_for`, `asma_id`, `reporter_strain` and
+`source_formula`. **Caveats 3 and 4 were corrected**: this card previously said the
+buried exclusion was captured and that tetracycline meant the reporter.
+
 ## Recommended uses / not for
 
 **Good for:** which ASMA strains and combinations have been tested in an animal;
 relative PA burden between treatment arms within a single experiment; clinical
 score comparisons; recovering what was actually dosed and on what schedule; linking
-in vivo results back to isolate genomics and in vitro phenotyping through `ASMA_id`.
+in vivo results back to isolate genomics and in vitro phenotyping through `asma_id`
+(bare numbers here, `2260`; the genomics and phenotyping tables write `ASMA-2260`, so
+add the prefix to join).
 
 **Not for, yet:** pooling burden across experiments without checking `unit`; any
 analysis that turns on the meaning of a zero or on a limit of detection;
