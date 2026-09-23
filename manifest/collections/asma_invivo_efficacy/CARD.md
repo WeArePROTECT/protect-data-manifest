@@ -80,13 +80,20 @@ PDFs are worth keeping alongside the workbooks. Same for the per-experiment dosi
 
 ## How it connects (join keys)
 
-- `asma_id` is the ASMA isolate number in **bare form** (`2260`, a co-culture
-  `2260|3913`), on every table. **It does not join directly** to `asma_genomics` (Alex
-  Styer's taxonomy spine) or `asma_phenotyping` (Sun-Young Kim's in vitro screens),
-  which write `ASMA-2260`: split the pipe list and add the `ASMA-` prefix first, or the
-  join silently returns nothing. With that, a strain's in vitro competition result and
-  its in vivo protection result can be put side by side. (Corrected 2026-09-23: this
-  line said the key joined directly; it never did, since the build wrote `ASMA2260`.)
+- `asma_id` is the ASMA isolate number, and **its form depends on which copy you read.**
+  - **The curated CSVs on thar write it bare** (`2260`, a co-culture `2260|3913`), on
+    every table. There it **does not join directly** to `asma_genomics` (Alex Styer's
+    taxonomy spine) or `asma_phenotyping` (Sun-Young Kim's in vitro screens), which write
+    `ASMA-2260`: split the pipe list and add the `ASMA-` prefix first, or the join
+    silently returns nothing. (Corrected 2026-09-23: this line said the key joined
+    directly; it never did, since the build wrote `ASMA2260`.)
+  - **The lakehouse copy, `protect.invivo`, writes `ASMA-2260`** (a co-culture
+    `ASMA-2260|ASMA-3913`, ascending), the one lakehouse form (pipeline ruleset
+    §2a-quater, PROTECT-30). The exporter converts; the curated build is unchanged. There
+    a single isolate joins with `=`, and a co-culture after splitting on the pipe.
+
+  Either way, a strain's in vitro competition result and its in vivo protection result
+  can then be put side by side.
 - `mouse_uid` is synthesised by the build (`EXP##_M###`) because **mouse numbers
   restart at 1 in every experiment** and the source carries no globally unique
   animal identifier. It is stable across rebuilds. Do not expect the Nizet lab to
@@ -231,8 +238,9 @@ buried exclusion was captured and that tetracycline meant the reporter.
 relative PA burden between treatment arms within a single experiment; clinical
 score comparisons; recovering what was actually dosed and on what schedule; linking
 in vivo results back to isolate genomics and in vitro phenotyping through `asma_id`
-(bare numbers here, `2260`; the genomics and phenotyping tables write `ASMA-2260`, so
-add the prefix to join).
+(bare numbers in the curated CSVs, `2260`, so add the `ASMA-` prefix to join them to the
+genomics and phenotyping tables; `protect.invivo` on the lakehouse already writes
+`ASMA-2260`).
 
 **Not for, yet:** pooling burden across experiments without checking `unit`; any
 analysis that turns on the meaning of a zero or on a limit of detection;
