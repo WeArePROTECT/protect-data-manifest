@@ -80,10 +80,13 @@ PDFs are worth keeping alongside the workbooks. Same for the per-experiment dosi
 
 ## How it connects (join keys)
 
-- `strains.asma_id` is the **ASMA_id** used across PROTECT, so this joins directly
-  to `asma_genomics` (Alex Styer's taxonomy spine) and to `asma_phenotyping`
-  (Sun-Young Kim's in vitro screens). A strain's in vitro competition result and its
-  in vivo protection result can be put side by side through this key alone.
+- `asma_id` is the ASMA isolate number in **bare form** (`2260`, a co-culture
+  `2260|3913`), on every table. **It does not join directly** to `asma_genomics` (Alex
+  Styer's taxonomy spine) or `asma_phenotyping` (Sun-Young Kim's in vitro screens),
+  which write `ASMA-2260`: split the pipe list and add the `ASMA-` prefix first, or the
+  join silently returns nothing. With that, a strain's in vitro competition result and
+  its in vivo protection result can be put side by side. (Corrected 2026-09-23: this
+  line said the key joined directly; it never did, since the build wrote `ASMA2260`.)
 - `mouse_uid` is synthesised by the build (`EXP##_M###`) because **mouse numbers
   restart at 1 in every experiment** and the source carries no globally unique
   animal identifier. It is stable across rebuilds. Do not expect the Nizet lab to
