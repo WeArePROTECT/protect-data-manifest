@@ -3,7 +3,7 @@
 collection_id: asma_phenotyping
 maintainer: Spencer Long (Arkin Lab) — DRAFT, pending review by Sun-Young Kim (SYK)
 last_reviewed: 2026-09-04
-summary: Lab-measured phenotypes for the ASMA isolates — growth curves (BHI/SCFM), carbon & amino-acid utilization, PA reporter inhibition/competition assays, and measured antibiotic resistance. The phenotype half of the ASMA collection. IMPORTANT — the `Competition` sheet is the Task-2.1 in-vitro FORMULATION exclusion screen (1–5-member SynComs vs 8 pathogen reporters, computed Inhibition_percent). Join to the rest of PROTECT via ASMA_id (NOT the local sample_id).
+summary: Lab-measured phenotypes for the ASMA isolates — growth curves (BHI/SCFM), carbon & amino-acid utilization, PA reporter inhibition/competition assays, and measured antibiotic resistance. The phenotype half of the ASMA collection. IMPORTANT — the `Competition` sheet is the Task-2.1 in-vitro FORMULATION exclusion screen (1–5-member SynComs vs pathogen reporters, 22 in the 2026-09-29 workbook, computed Inhibition_percent). Join to the rest of PROTECT via ASMA_id (NOT the local sample_id).
 keywords: [phenotype, growth curve, growth, OD600, SCFM, BHI, carbon utilization, carbon source, sole carbon, carbon kinetics, amino acid utilization, reporter, PA reporter, inhibition, pairwise interaction, competition assay, formulation, formulation screen, in vitro exclusion, competitive exclusion, SynCom, community formulation, Inhibition_percent, PA14, PAO1, VAP pathogen, antibiotic resistance, measured AMR, MIC, isolate stock list, ASMA_list, APL metadata, Sun-Young Kim, SYK]
 related: [patient_sample_isolate_linkage, asma_genomics]
 ---
@@ -22,17 +22,24 @@ measured antibiotic resistance — the **phenotype half of the ASMA collection**
 **This collection also holds the core FORMULATION data.** The `Competition` sheet in the
 `ASMA_phenotype_*.xlsx` workbooks is the **Task-2.1 in-vitro formulation exclusion screen**: 1–5-member
 SynCom communities (`ASMA_A_id`…`ASMA_E_id`) co-cultured with a fluorescent pathogen reporter
-(`Reporter_id` — 8 reporters incl. PA14, PAO1, clinical PA, and VAP-expansion AB/KP/SA), readout =
+(`Reporter_id`: 22 reporters in the 2026-09-29 workbook, incl. PA14, PAO1, 16 clinical PA isolates, and VAP-expansion AB/KP/SA), readout =
 computed `Inhibition_percent`. That is why this collection carries the `FORMULATION` facet even though
-its id leads with "phenotyping." **Both are now LIVE on the KBase lakehouse (2026-09-03).** The `Competition` screen is
-`protect.formulation.competition_screen` (28,928 rows); the carbon/growth/AMR assays are
-`protect.phenotype` (12 tables, 20,353 rows). Spec, recon and retrospective:
-`protect_lakehouse_pipeline/datasets/_runs/formulation_push_20260903/`. Namespace READMEs, each
+its id leads with "phenotyping." **Both are LIVE on the KBase lakehouse, last refreshed 2026-10-05 from `ASMA_phenotype_20260929.xlsx`**
+(first loaded 2026-09-03). The `Competition` screen is `protect.formulation.competition_screen` (30,536
+rows, 22 reporters, a `media` column); the carbon/growth/AMR/MIC assays are `protect.phenotype` (14
+tables, 25,810 rows). Run record, spec and recon:
+`protect_lakehouse_pipeline/datasets/_runs/syk_m24_refresh_20261001/` (the first load's:
+`protect_lakehouse_pipeline/datasets/_runs/formulation_push_20260903/`). Namespace READMEs, each
 leading with what will bite you: `protect_lakehouse_pipeline/datasets/{formulation-screening,phenotype}/README.md`.
 
 ⚠ **Everything in `protect.phenotype` is `preliminary`** by SYK's own note: raw measurements with
 no QC pass applied, and outliers observed among biological replicates with no agreed exclusion
 criteria. No filtering is applied on the lakehouse.
+
+⚠ **ASMA-4467's phenotype data is retracted** (Sun-Young, 2026-09-25: the stock in freezer plate FREP5,
+well B9, was the wrong strain). It is off the lakehouse since 2026-10-05, but his workbooks before
+`ASMA_phenotype_20260927.xlsx` still hold it (the 0828 and 0904 files do), as does Cassandra Reyes's
+hemolysis workbook (2 rows). Do not use it from those files.
 
 ## How it connects (join keys)
 - **Join to the rest of PROTECT on `ASMA_id`** → the `patient_sample_isolate_linkage` hub →
@@ -49,9 +56,9 @@ criteria. No filtering is applied on the lakehouse.
 ## Example questions this answers
 - *"Growth phenotype of the ASMA isolates?"* → growth curves: `ASMA_phenotype.xlsx [growth_curve]` (BHI) and the SCFM curves in `ASMA_phenotype_20250420.xlsx [Growth_Curve_SCFM]` / `ASMA_phenotype_20251209.xlsx` / `_20251222.xlsx [SCFM_growth_curve]`. Columns `cyc_1…cyc_193` are raw OD600 timepoints (see Caveats — no derived metric).
 - *"Which carbon sources can isolate X use?"* → `ASMA_phenotype.xlsx [carbon_utilization]` (OD per single carbon/amino-acid source) or `ASMA_phenotype_20250420.xlsx [Carbon_utilization_binary]`; time-series kinetics in the dated `ASMA_carbon_kinetics_*.xlsx` workbooks (use the newest — `dataset.yaml` lists the current set).
-- *"Measured antibiotic resistance (MICs)?"* → `ASMA_phenotype_20250420.xlsx [Antibiotic_resistance]` (KAN/CHL/CB/TET/STR/SPE/GEN). **This is measured phenotype — for genomic AMR gene predictions use `asma_genomics/amrfinder.tsv`.**
+- *"Measured antibiotic resistance (MICs)?"* → `ASMA_phenotype_20250420.xlsx [Antibiotic_resistance]` (KAN/CHL/CB/TET/STR/SPE/GEN). **This is measured phenotype — for genomic AMR gene predictions use `asma_genomics/amrfinder.tsv`.** The `MIC` sheet of `ASMA_phenotype_20260929.xlsx` holds raw OD600 per well for 15 clinical PA isolates against ceftazidime, meropenem and aztreonam (lakehouse: `protect.phenotype.antibiotic_mic_od600`); it carries no MIC calls yet.
 - *"PA inhibition / who inhibits whom?"* → `ASMA_phenotype.xlsx [pairwise_interaction]` (bacterium vs PA reporter) and the `Competition` sheet (see next).
-- *"Which formulations exclude the pathogen in vitro / by how much?"* → the **`Competition`** sheet in the newest `ASMA_phenotype_*.xlsx` (Task-2.1 exclusion screen): `ASMA_A_id`…`ASMA_E_id` define the 1–5-member SynCom, `Reporter_id` the pathogen (PA14/PAO1/clinical-PA/AB/KP/SA), `Inhibition_percent` the readout. On the lakehouse as `protect.formulation.competition_screen`, live 2026-09-03.
+- *"Which formulations exclude the pathogen in vitro / by how much?"* → the **`Competition`** sheet in the newest `ASMA_phenotype_*.xlsx` (Task-2.1 exclusion screen): `ASMA_A_id`…`ASMA_E_id` define the 1–5-member SynCom, `Reporter_id` the pathogen (PA14/PAO1/clinical-PA/AB/KP/SA), `Inhibition_percent` the readout. On the lakehouse as `protect.formulation.competition_screen` (live since 2026-09-03, refreshed 2026-10-05).
 - *"Where is isolate ASMA-#### physically stocked?"* → `ASMA_list.xlsx` (`stock_location`, `CP1_plate`, `growth_media`).
 
 ## Data dictionary (files & what they hold)
