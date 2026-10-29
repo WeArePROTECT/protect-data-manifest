@@ -4,7 +4,7 @@ collection_id: lakehouse_exports
 maintainer: Spencer Long (Arkin Lab)
 last_reviewed: 2026-09-04
 summary: Dated snapshot exports of PROTECT tables staged to/from the KBase lakehouse, across nine live namespaces. The window into what exists in the lakehouse for people who can't query it directly yet. As of 2026-09-03 this includes the SOW Task-2.1 formulation exclusion screen, SYK's phenotyping, the ASMA stock registry, and the strain-level decision card.
-keywords: [lakehouse, KBase, data lake, exports, formulation, competition screen, exclusion screen, SynCom, phenotype, growth curve, hemolysis, antibiotic resistance, AMR genes, virulence factors, ASMA stock list, FREP plate map, decision card, unified sheet, shortlist, txt export tables, integration export, mind-analysis export, genome-analysis export, taxonomy, isolate taxonomy, GTDB, strain group, lakehouse tables, staged data, cleaned tables, silver layer, refinery bronze, genomedepot, eggNOG, KEGG, browser tables, NAMESPACES.md]
+keywords: [lakehouse, KBase, data lake, exports, formulation, competition screen, exclusion screen, SynCom, phenotype, growth curve, hemolysis, antibiotic resistance, AMR genes, virulence factors, ASMA stock list, FREP plate map, decision card, unified sheet, shortlist, txt export tables, integration export, mind-analysis export, genome-analysis export, taxonomy, isolate taxonomy, GTDB, strain group, lakehouse tables, staged data, cleaned tables, silver layer, refinery bronze (deleted 2026-10-29), genomedepot, eggNOG, KEGG, browser tables, NAMESPACES.md]
 related: [patient_sample_isolate_linkage, zengler_metagenomics_mind, asma_phenotyping, asma_genomics]
 ---
 
@@ -12,12 +12,29 @@ related: [patient_sample_isolate_linkage, zengler_metagenomics_mind, asma_phenot
 
 > Machine facts and the **dated export subdirectories** live in the sibling `dataset.yaml`.
 
-> ## ⛔ Do not use `protect.refinery_bronze` as a data source
+> ## 🗑️ `protect.refinery_bronze` was DELETED on 2026-10-29
 >
-> It is a **frozen, second-hand 2026-03-07 copy** of Adam Arkin's pre-existing refinery,
-> ingested only so he could reach data he already had. It is uncurated, unrefreshed, and
-> preserves his quirks verbatim (string-encoded numbers, misspellings, all-null columns,
+> **The namespace no longer exists on the lakehouse.** All 23 tables and 30,582,283 rows were
+> dropped with `PURGE` under PROTECT-13, removing the underlying files as well as the catalog
+> entries. If you have a query or notebook pointing at it, that is why it fails.
+>
+> It was a **frozen, second-hand 2026-03-07 copy** of Adam Arkin's pre-existing refinery,
+> ingested only so he could reach data he already had. It was uncurated, unrefreshed, and
+> preserved his quirks verbatim (string-encoded numbers, misspellings, all-null columns,
 > duplicate keys). Every table in it is superseded by a raw-sourced namespace.
+>
+> **It was deleted because it was actively misleading.** Adam's own analysis read it until
+> 2026-10-04 and withdrew the results computed from it; three of its tables turned out to hold
+> Sun-Young Kim's carbon tab rather than the data their names promised (PROTECT-37). He asked for
+> the schema to be unpublished, noting that the catalog listed it as a peer of the live schemas
+> with no lifecycle field, so a warning in a README never reached him.
+>
+> **The data is not lost.** Two complete copies survive on thar and were checksum-verified
+> immediately before the deletion: Adam's original parquet under
+> `Arkin_Lab/aparkin/arbitrary_gold/protect/.data-refinery/gold/`, and the Stage 1 export listed
+> in the sibling `dataset.yaml` as `refinery-bronze_export_20260624_155541`, which is still on
+> disk. Restore recipe: `protect_lakehouse_pipeline/docs/refinery_bronze_deletion_2026-08-28.md`
+> §5.
 >
 > **Specifically, `dim_isolate` looks like an ASMA taxonomy table and must not be used as one.**
 > Against Alex Styer's current file it has: `strain_group` agreeing on only **9 of 4,946**
@@ -96,7 +113,7 @@ and when*, even though they can't query the lakehouse directly yet. The exports 
 | `genome-features_export_<date>/` | `protect.genome_analysis`, **added 2026-09-03**: `isolate_amr_genes` (34,082), `isolate_virulence_factors` (172,263), `isolate_ani_clusters` (599). ⚠ **`'NA'` is a VALUE here** — see below |
 | `genome-sequences_export_<date>/` | `protect.genome_analysis` — `contig_sequences`, 7,785,073 rows |
 | *(not staged here)* | `protect.genomedepot` — 39 `browser_*` tables mirrored from the GenomeDepot MariaDB. **Its exports stage from a different directory**, so they do not appear in this collection. **Refreshed 2026-09-04**: 46,321,767 → 92,916,568 rows, the growth entirely **functional annotation** (eggNOG, KEGG, GO, COG, CAZy, TC). ⚠ **Any GenomeDepot function analysis predating 2026-09-04 saw almost no annotation data** — `browser_eggnog_description` was 91 rows and is now 30,359 |
-| `refinery-bronze_export_<date>/` | `protect.refinery_bronze` — aparkin's frozen Bronze refinery. **⛔ NOT A CURATED SOURCE — see the warning below** |
+| `refinery-bronze_export_<date>/` | ~~`protect.refinery_bronze`~~ — aparkin's frozen Bronze refinery. **🗑️ The namespace was DELETED 2026-10-29 (PROTECT-13). This export directory remains on disk and is now the restore copy. See the warning below** |
 | `previous_exports/` | archived earlier snapshots |
 
 > The **current dated export dirs and their dates** live in the sibling `dataset.yaml`: each entry in
